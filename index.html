@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Traffic Sentinel</title>
+  <meta name="description" content="Traffic Sentinel: traffic-event detection and causal accident-risk scoring from a fixed CCTV camera. WIUT Hackathon 2026, Computer Vision track.">
+  <meta name="theme-color" content="#0c0e11">
+  <meta name="color-scheme" content="dark">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='9' y='1' width='14' height='30' rx='4' fill='%231a1e24'/%3E%3Ccircle cx='16' cy='8' r='4' fill='%23ff4d4d'/%3E%3Ccircle cx='16' cy='16' r='4' fill='%23ffb020'/%3E%3Ccircle cx='16' cy='24' r='4' fill='%2335d07f'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="css/site.css">
+  <script type="module" src="js/main.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="Traffic Sentinel, back to top">
+      <span class="brand-lamp" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span class="brand-name">Traffic&nbsp;Sentinel</span>
+    </a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#team">Team</a>
+      <a href="#approach">Approach</a>
+      <a href="#eda">EDA</a>
+      <a href="#results">Results</a>
+      <a href="#dashboard">Dashboard</a>
+      <a href="#demo" class="nav-demo">Live demo</a>
+      <a href="#report">Report</a>
+      <a href="#links">Links</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- ============================================================ HERO -->
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero-lanes" aria-hidden="true"></div>
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow" id="hero-event">WIUT Hackathon 2026 · Computer Vision track</p>
+          <h1 id="hero-title"><span>Traffic</span> <span class="hero-accent">Sentinel</span></h1>
+          <p class="hero-tag" id="hero-tagline">A fixed CCTV camera that reports what happened on the road, and warns before it does.</p>
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="#demo">Try it on your video</a>
+            <a class="btn" href="#results">See the sample results</a>
+          </div>
+        </div>
+        <aside class="hero-board" aria-label="System at a glance">
+          <div class="board-head"><span class="led" aria-hidden="true"></span>SYSTEM BOARD</div>
+          <dl class="board-stats" id="hero-stats"></dl>
+          <div class="board-feed">
+            <div class="board-sub">EVENT FEED · sample videos</div>
+            <ol class="feed" id="hero-feed"></ol>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ============================================================ TEAM -->
+    <section class="section" id="team" aria-labelledby="team-title">
+      <div class="wrap">
+        <header class="sec-head"><span class="plate">01</span><h2 id="team-title">Team</h2>
+          <p class="sec-lede">Three people, one camera, fourteen kinds of trouble. Who did what:</p></header>
+        <div id="team-body" class="team-grid"></div>
+      </div>
+    </section>
+
+    <!-- ============================================================ APPROACH -->
+    <section class="section" id="approach" aria-labelledby="approach-title">
+      <div class="wrap">
+        <header class="sec-head"><span class="plate">02</span><h2 id="approach-title">Problem &amp; approach</h2>
+          <p class="sec-lede">Input: one fixed road camera. Output A: traffic events as <code>[start_sec, end_sec, label]</code> across 14 classes. Output B: a causal per-frame accident risk in [0, 1] that should cross 0.5 up to 5 s before an accident, using only past frames.</p></header>
+
+        <div class="legend-row" aria-label="Diagram legend">
+          <span class="kind kind-learned">Learned</span><span class="kind-note">weights or statistics fitted to data</span>
+          <span class="kind kind-rule">Rule-based</span><span class="kind-note">hand-written logic with named thresholds</span>
+          <span class="kind kind-manual">Hand-drawn</span><span class="kind-note">per-camera geometry</span>
+        </div>
+        <figure class="pipeline">
+          <div id="pipeline-svg" class="pipeline-svg"></div>
+          <figcaption>Two independent paths. Part A sees the whole clip offline; Part B only ever sees frames up to "now".</figcaption>
+          <noscript><p>Part A: frames → YOLO11 detector (learned) → ByteTrack-style tracker → trajectories → learned scene model + hand-drawn layout → per-class rules → segment post-processing → events. Part B: frames (causal) → online tracker → time-to-collision + hard-braking hazard → logistic calibration → fast-attack/slow-decay smoothing → risk.</p></noscript>
+        </figure>
+
+        <div class="cols-3 approach-cards">
+          <article class="card">
+            <h3>Models &amp; data</h3>
+            <ul class="tight">
+              <li><strong>YOLO11m</strong> (COCO-pretrained) for person, car, bus, truck, motorcycle, bicycle and animals at 1280 px, ~10 analysed fps.</li>
+              <li><strong>Fire/smoke detector</strong> fine-tuned on public fire/smoke imagery. <span class="todo">TODO: dataset name + size.</span></li>
+              <li><strong>Scene model</strong>: a 48 × 27 grid learned from vehicle tracks - visit counts (road mask), 8-bin heading histograms (lane directions), dwell time (queue zones). A prior from the sample videos is blended with the test clip's own tracks.</li>
+              <li><strong>Signal state</strong>: lamp brightness in a drawn ROI, on/off threshold chosen per video with Otsu.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Why this design</h3>
+            <ul class="tight">
+              <li>Fourteen classes and a handful of labelled clips: far too little to train an end-to-end event model, but plenty to learn <em>where and which way traffic flows</em>.</li>
+              <li>Rules over tracks are debuggable: every false positive can be traced to one threshold in <code>config.py</code>.</li>
+              <li>Learned directions make wrong-way and U-turn logic camera-agnostic instead of drawn per scene.</li>
+              <li>Part B is kept separate so it can never peek at future frames or at Part A's offline output.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Rebuild it in five steps</h3>
+            <ol class="tight">
+              <li>Sample frames to ~10 fps at 1280 px width; detect with YOLO11m (conf 0.25).</li>
+              <li>Track with two-stage (high/low confidence) IoU association and constant-velocity prediction; drop tracks under 5 observations; smooth positions over 0.6 s.</li>
+              <li>Accumulate the scene grid from moving vehicles (&gt; 25 px/s) and cells with ≥ 3 visits.</li>
+              <li>Run the 14 per-class rules below over tracks + scene + layout.</li>
+              <li>Merge segments closer than 1.0 s; drop segments shorter than 0.5 s.</li>
+            </ol>
+          </article>
+        </div>
+
+        <h3 class="sub">The rulebook - one detector per class</h3>
+        <div id="rulebook" class="rulebook"></div>
+      </div>
+    </section>
+
+    <!-- ============================================================ EDA -->
+    <section class="section" id="eda" aria-labelledby="eda-title">
+      <div class="wrap">
+        <header class="sec-head"><span class="plate">03</span><h2 id="eda-title">EDA of the sample videos</h2>
+          <p class="sec-lede">What the footage looks like, what moves where, and what that changed in the design.</p></header>
+        <div id="eda-body"></div>
+      </div>
+    </section>
+
+    <!-- ============================================================ RESULTS -->
+    <section class="section" id="results" aria-labelledby="results-title">
+      <div class="wrap">
+        <header class="sec-head"><span class="plate">04</span><h2 id="results-title">Results on sample videos</h2>
+          <p class="sec-lede">Every sample, annotated. Click any event bar to jump the video to it; hover for start / end / label. The risk curve follows the playhead - drag it to scrub.</p></header>
+        <div id="results-body"></div>
+      </div>
+    </section>
+
+    <!-- ============================================================ DASHBOARD -->
+    <section class="section" id="dashboard" aria-labelledby="dash-title">
+      <div class="wrap">
+        <header class="sec-head"><span class="plate">05</span><h2 id="dash-title">Operator dashboard</h2>
+          <p class="sec-lede">The same predictions, seen the way a traffic operations centre would: how much, what kind, where and when.</p></header>
+        <div id="dash-body"></div>
+      </div>
+    </section>
+
+    <!-- ============================================================ DEMO -->
+    <section class="section section-demo" id="demo" aria-labelledby="demo-title">
+      <div class="wrap">
+        <header class="sec-head"><span class="plate plate-live">06</span><h2 id="demo-title">Live demo</h2>
+          <p class="sec-lede">Upload a road-camera clip and get events, an annotated video and the risk curve back. Limits: <strong id="demo-limit-mb">200 MB</strong> max, <strong>.mp4 / .mov / .avi</strong>, only the first <strong id="demo-limit-s">120 s</strong> are analysed. Runs on CPU, so expect roughly real-time or slower; one job at a time, others queue.</p></header>
+        <div id="demo-body"></div>
+      </div>
+    </section>
+
+    <!-- ============================================================ REPORT -->
+    <section class="section" id="report" aria-labelledby="report-title">
+      <div class="wrap">
+        <header class="sec-head"><span class="plate">07</span><h2 id="report-title">Report</h2>
+          <p class="sec-lede">One page: what worked, what did not, what we would do next.</p></header>
+        <div id="report-body" class="report"></div>
+      </div>
+    </section>
+
+    <!-- ============================================================ LINKS -->
+    <section class="section" id="links" aria-labelledby="links-title">
+      <div class="wrap">
+        <header class="sec-head"><span class="plate">08</span><h2 id="links-title">Links</h2></header>
+        <div id="links-body" class="links-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <span id="footer-team">Traffic Sentinel</span> · WIUT Hackathon 2026 · No frameworks, no build step, no trackers.
+    </div>
+  </footer>
+</body>
+</html>

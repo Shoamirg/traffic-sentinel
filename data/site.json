@@ -1,0 +1,43 @@
+{
+  "placeholder": false,
+  "team_name": "AMITY-Tigers",
+  "tagline": "A fixed CCTV camera that reports what happened on the road, and warns before it does.",
+  "event": "WIUT Hackathon 2026 - Computer Vision track",
+  "demo_api": "",
+  "demo_page": "TODO: https://huggingface.co/spaces/<user>/traffic-sentinel",
+  "members": [
+    {
+      "name": "Shoamir Shorustamov",
+      "role": "Team captain",
+      "did": [],
+      "github": "https://github.com/Shoamirg",
+      "linkedin": "",
+      "portfolio": "",
+      "projects": []
+    },
+    {
+      "name": "Afzal Qodirov",
+      "role": "Team member",
+      "did": [],
+      "github": "",
+      "linkedin": "",
+      "portfolio": "",
+      "projects": []
+    },
+    {
+      "name": "Zohirjon Shokiriy",
+      "role": "Team member",
+      "did": [],
+      "github": "",
+      "linkedin": "",
+      "portfolio": "",
+      "projects": []
+    }
+  ],
+  "links": {
+    "repo": "https://github.com/Shoamirg/traffic-sentinel",
+    "weights": "https://github.com/Shoamirg/traffic-sentinel/tree/main/weights",
+    "predictions": "https://github.com/Shoamirg/traffic-sentinel/blob/main/predictions_samples.json"
+  },
+  "project_name": "Traffic Sentinel"
+}

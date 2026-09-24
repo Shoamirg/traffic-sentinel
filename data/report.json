@@ -1,0 +1,22 @@
+{
+  "placeholder": true,
+  "summary": "TODO: two or three sentences - what the system does, the dev-set score, and the single biggest lesson.",
+  "worked": [
+    "TODO: Learning the lane directions from trajectories instead of drawing them - wrong_way and illegal_u_turn became camera-agnostic.",
+    "TODO: Chaining stationary intervals across tracker ID switches - stopped_vehicle stopped fragmenting.",
+    "TODO: Per-video Otsu threshold on the signal lamp ROI - red-light state survives day/night changes.",
+    "TODO: Fast-attack / slow-decay smoothing on the risk score - alarms fire early and do not flicker."
+  ],
+  "didnt": [
+    "TODO: Accident onset is often late by ~1 s because image-space box overlap precedes real contact (or never happens under occlusion).",
+    "TODO: Headlight glare and rain streaks still cause short fire_smoke false positives at night.",
+    "TODO: Classes that depend on hand-drawn layout (illegal_turn, stop_line) do nothing on a camera without a layout.",
+    "TODO: CPU inference runs at roughly real time only with frame sub-sampling; small pedestrians far from the camera are missed."
+  ],
+  "next": [
+    "TODO: Ground-plane homography so speeds and distances are metric instead of size-normalised pixels.",
+    "TODO: A learned temporal classifier on track features for accident / near_miss instead of hand thresholds.",
+    "TODO: Automatic layout proposals (stop lines, crossings) from the learned queue zones and pedestrian flows.",
+    "TODO: Per-lane event statistics in the operator dashboard."
+  ]
+}
