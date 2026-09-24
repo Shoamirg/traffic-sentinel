@@ -1,0 +1,8 @@
+.git
+cache
+snaps
+samples
+labels/*.mp4
+**/__pycache__
+.pytest_cache
+weights/yolo11x.pt

@@ -1,0 +1,189 @@
+{
+ "placeholder": true,
+ "dev_set": {
+  "score_a": 0.512,
+  "score_b": 0.438,
+  "model_score": 0.484,
+  "per_class": {
+   "accident": {
+    "f1@0.3": 0.68,
+    "f1@0.5": 0.6,
+    "f1@0.7": 0.45,
+    "tp": 3,
+    "fp": 2,
+    "fn": 2
+   },
+   "near_miss": {
+    "f1@0.3": 0.88,
+    "f1@0.5": 0.8,
+    "f1@0.7": 0.65,
+    "tp": 2,
+    "fp": 1,
+    "fn": 0
+   },
+   "red_light": {
+    "f1@0.3": 0.97,
+    "f1@0.5": 0.89,
+    "f1@0.7": 0.74,
+    "tp": 4,
+    "fp": 0,
+    "fn": 1
+   },
+   "wrong_way": {
+    "f1@0.3": 0.58,
+    "f1@0.5": 0.5,
+    "f1@0.7": 0.35,
+    "tp": 1,
+    "fp": 2,
+    "fn": 0
+   },
+   "illegal_u_turn": {
+    "f1@0.3": 0.83,
+    "f1@0.5": 0.75,
+    "f1@0.7": 0.6,
+    "tp": 6,
+    "fp": 2,
+    "fn": 2
+   },
+   "stopped_vehicle": {
+    "f1@0.3": 0.65,
+    "f1@0.5": 0.57,
+    "f1@0.7": 0.42,
+    "tp": 2,
+    "fp": 3,
+    "fn": 0
+   },
+   "jaywalking": {
+    "f1@0.3": 0.94,
+    "f1@0.5": 0.86,
+    "f1@0.7": 0.71,
+    "tp": 6,
+    "fp": 1,
+    "fn": 1
+   },
+   "failure_to_yield": {
+    "f1@0.3": 0.88,
+    "f1@0.5": 0.8,
+    "f1@0.7": 0.65,
+    "tp": 4,
+    "fp": 0,
+    "fn": 2
+   },
+   "illegal_turn": {
+    "f1@0.3": 0.83,
+    "f1@0.5": 0.75,
+    "f1@0.7": 0.6,
+    "tp": 6,
+    "fp": 3,
+    "fn": 1
+   },
+   "solid_line_crossing": {
+    "f1@0.3": 0.94,
+    "f1@0.5": 0.86,
+    "f1@0.7": 0.71,
+    "tp": 6,
+    "fp": 0,
+    "fn": 2
+   },
+   "stop_line": {
+    "f1@0.3": 0.08,
+    "f1@0.5": 0.0,
+    "f1@0.7": 0,
+    "tp": 0,
+    "fp": 1,
+    "fn": 0
+   },
+   "congestion": {
+    "f1@0.3": 1,
+    "f1@0.5": 1.0,
+    "f1@0.7": 0.85,
+    "tp": 5,
+    "fp": 0,
+    "fn": 0
+   },
+   "road_obstacle": {
+    "f1@0.3": 0.75,
+    "f1@0.5": 0.67,
+    "f1@0.7": 0.52,
+    "tp": 4,
+    "fp": 3,
+    "fn": 1
+   },
+   "fire_smoke": {
+    "f1@0.3": 0.91,
+    "f1@0.5": 0.83,
+    "f1@0.7": 0.68,
+    "tp": 5,
+    "fp": 2,
+    "fn": 0
+   }
+  }
+ },
+ "ablations": [
+  {
+   "name": "Full system",
+   "score_a": 0.512,
+   "notes": "PLACEHOLDER numbers"
+  },
+  {
+   "name": "- learned direction field (hand layout only)",
+   "score_a": 0.441,
+   "notes": "wrong_way / u-turn recall drops"
+  },
+  {
+   "name": "- queue zones",
+   "score_a": 0.47,
+   "notes": "queued cars flagged as stopped_vehicle"
+  },
+  {
+   "name": "- segment merging",
+   "score_a": 0.455,
+   "notes": "fragmented segments, more FP"
+  },
+  {
+   "name": "YOLO11n instead of YOLO11m",
+   "score_a": 0.462,
+   "notes": "3x faster, misses small pedestrians"
+  }
+ ],
+ "runtime": [
+  {
+   "video": "sample_001",
+   "duration": 48.0,
+   "seconds": 61.0,
+   "x_realtime": 0.79
+  },
+  {
+   "video": "sample_002",
+   "duration": 60.0,
+   "seconds": 80.5,
+   "x_realtime": 0.75
+  },
+  {
+   "video": "sample_003",
+   "duration": 36.0,
+   "seconds": 44.2,
+   "x_realtime": 0.81
+  }
+ ],
+ "failures": [
+  {
+   "title": "TODO - Glare read as fire",
+   "text": "PLACEHOLDER. Headlight bloom in rain triggered fire_smoke for several seconds.",
+   "video": "sample_003",
+   "t": 2.0
+  },
+  {
+   "title": "TODO - ID switch during occlusion",
+   "text": "PLACEHOLDER. A bus hid a car; the tracker re-assigned its ID and the stopped_vehicle segment was split.",
+   "video": "sample_001",
+   "t": 14.0
+  },
+  {
+   "title": "TODO - Late accident onset",
+   "text": "PLACEHOLDER. Contact detected ~1 s late because boxes overlap in image space before the vehicles touch.",
+   "video": "sample_001",
+   "t": 24.8
+  }
+ ]
+}

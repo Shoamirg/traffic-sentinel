@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.coverage
+cache/
+snaps/
+samples/
+*.MP4
+*.mp4
+!website/static/media/*.mp4
+predictions.json
+weights/yolo11x.pt
+.env*
+.venv/
+venv/
+website/node_modules/
