@@ -25,7 +25,7 @@ from .scene import Layout
 from .signal import lamp_score, locate_lamps
 from .tracker import ByteTracker
 from .tracks import Track, TrackSet
-from .video import VideoMeta, iter_frames, iter_ref_frames, read_meta, stride_for
+from .video import VideoMeta, iter_frames, iter_ref_frames, prefetch, read_meta, stride_for
 
 THUMB_WIDTH = 480
 THUMB_EVERY_SEC = 1.0
@@ -123,7 +123,7 @@ def extract(video_path: str, detector: Detector | None = None, layout: Layout | 
     thumbs, thumb_times = [], []
     size = (0, 0)
     reader = iter_ref_frames if config.PART_A_DECODER == "av" else iter_frames
-    for n, (idx, t, frame, full) in enumerate(reader(meta, stride, max_seconds, keep_full=True)):
+    for n, (idx, t, frame, full) in enumerate(prefetch(reader(meta, stride, max_seconds, keep_full=True))):
         if n == 0:
             lamps.setup(frame, full)
         size = (frame.shape[1], frame.shape[0])

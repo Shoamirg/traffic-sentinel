@@ -187,3 +187,20 @@ def test_lazy_full_frame_matches_ffmpeg_conversion(pix_fmt):
     assert lazy.shape == (72, 128, 3) and crop.shape == (40, 80, 3)
     assert np.abs(crop.astype(int) - ref[10:50, 20:100]).mean() < 3.0
     assert lazy[5:5, 0:10].size == 0
+
+
+def test_prefetch_preserves_order_and_propagates_errors():
+    from sentinel.video import prefetch
+    assert list(prefetch(iter(range(100)), depth=4)) == list(range(100))
+
+    def broken():
+        yield 1
+        raise ValueError("decoder failed")
+    got = []
+    with pytest.raises(ValueError):
+        for x in prefetch(broken()):
+            got.append(x)
+    assert got == [1]
+    it = prefetch(iter(range(10_000)), depth=2)     # consumer stops early: reader thread must exit
+    assert next(it) == 0
+    it.close()

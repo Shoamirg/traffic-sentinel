@@ -96,6 +96,21 @@ to 1280 px and only the signal-lamp crops are converted at full resolution
 | OpenCV, every frame | 80.6 s | 318.7 s |
 | PyAV, reference frames only | 76.6 s | 270.6 s |
 
+Decoding runs in a background thread a few frames ahead of detection (`video.prefetch`), so the
+CPU decode and the GPU detector overlap instead of alternating; output is unchanged.
+
+Scaling on C3905 (Spark, cores pinned with `taskset`; budget 383 s). "Harness floor" is the
+organisers' harness with `tools/null_solution.py`, i.e. its own decode of every frame for Part B:
+
+| cores | harness floor | our Part A | total ≈ floor + Part A + Part B detector |
+|---|---|---|---|
+| 2 | 248 s | 272 s | over budget for any solution on this CPU class |
+| 4 | 134 s | 166 s | ≈ 315 s |
+| 8 | 57 s | 79 s | ≈ 150 s |
+| 20 | — | 61 s | ≈ 110 s |
+
+On a Colab T4 (2 x86 vCPUs) the harness floor alone is 387 s, over the 383 s budget.
+
 `tools/null_solution.py` times the harness alone (`--solution tools/null_solution.py`): that is the
 decode floor on a given machine, and our share of the 3 x duration budget is what remains above it.
 Ultralytics runs with `YOLO_OFFLINE=1`, so it never opens a network connection.

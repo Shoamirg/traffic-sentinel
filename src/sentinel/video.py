@@ -15,6 +15,8 @@ Two readers yield the same (index, t, working frame[, full frame]) tuples:
 from __future__ import annotations
 
 from dataclasses import dataclass
+import queue
+import threading
 from typing import Iterator
 
 import cv2
@@ -181,3 +183,46 @@ def iter_ref_frames(meta: VideoMeta, stride: int, max_seconds: float | None = No
             yield (idx, t, work, LazyFullFrame(frame)) if keep_full else (idx, t, work)
     finally:
         container.close()
+
+
+_DONE = object()
+
+
+def prefetch(frames: Iterator[tuple], depth: int = 8) -> Iterator[tuple]:
+    """Run a frame iterator in a background thread, `depth` items ahead of the consumer.
+
+    Decoding (FFmpeg, GIL released) then overlaps with detection on the GPU
+    instead of alternating with it. Order is preserved, so results are unchanged;
+    an exception in the reader is re-raised in the consumer.
+    """
+    buf: queue.Queue = queue.Queue(maxsize=depth)
+    stop = threading.Event()
+
+    def work() -> None:
+        try:
+            for item in frames:
+                while not stop.is_set():
+                    try:
+                        buf.put(item, timeout=0.1)
+                        break
+                    except queue.Full:
+                        continue
+                if stop.is_set():
+                    return
+            buf.put(_DONE)
+        except BaseException as exc:  # handed to the consumer
+            buf.put(exc)
+
+    thread = threading.Thread(target=work, name="frame-prefetch", daemon=True)
+    thread.start()
+    try:
+        while True:
+            item = buf.get()
+            if item is _DONE:
+                return
+            if isinstance(item, BaseException):
+                raise item
+            yield item
+    finally:
+        stop.set()
+        thread.join(timeout=5)
