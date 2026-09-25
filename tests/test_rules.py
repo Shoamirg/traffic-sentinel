@@ -91,3 +91,13 @@ def test_hard_brake_before_other_car_is_near_miss():
     events = near_miss.detect(context([stopped, braker]))
     assert len(events) == 1
     assert 1.5 < events[0].start < 3.5
+
+
+def test_jaywalker_split_by_id_switch_is_one_crossing():
+    # the same crossing as above, but the tracker swaps IDs halfway: neither piece passes the gates alone
+    traffic = eastbound_traffic(y=360) + eastbound_traffic(y=400, start_id=2000) + eastbound_traffic(y=440, start_id=3000)
+    first = make_track(1, "person", 20, [(20, 640, 300), (22.1, 640, 405)], box_w=30, box_h=80)
+    second = make_track(2, "person", 22.3, [(22.3, 642, 412), (24, 642, 500)], box_w=30, box_h=80)
+    events = jaywalking.detect(context(traffic + [first, second], prior=traffic))
+    assert len(events) == 1
+    assert set(events[0].tids) == {1, 2}

@@ -204,3 +204,11 @@ def test_prefetch_preserves_order_and_propagates_errors():
     it = prefetch(iter(range(10_000)), depth=2)     # consumer stops early: reader thread must exit
     assert next(it) == 0
     it.close()
+
+
+def test_hysteresis_ignores_flicker_around_one_threshold():
+    from sentinel.rules.interaction import hysteresis
+    kerb = np.array([10, 14, 11, 13, 9, 12, 15, 10], float)          # hovers around a 12 px margin
+    assert not hysteresis(kerb, 24, 4).any()
+    crossing = np.array([0, 10, 30, 50, 20, 8, 3, 0], float)
+    assert hysteresis(crossing, 24, 4).tolist() == [False, False, True, True, True, True, False, False]

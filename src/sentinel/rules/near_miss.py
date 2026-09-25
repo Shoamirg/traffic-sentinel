@@ -19,6 +19,8 @@ from .interaction import candidate_pairs, heading_change, rel_speed, stable_size
 TTC_MAX = 1.2               # s
 MIN_CLOSING_REL = 1.5       # sizes/s
 BRAKE_REL = 2.5             # sizes/s^2 sustained deceleration
+BRAKE_WINDOW_SEC = 0.4      # ...averaged over this window: a pointwise derivative spikes on box jitter
+DANGER_MIN_SAMPLES = 2      # the collision course must hold on consecutive samples, not one frame
 SWERVE_RAD = np.deg2rad(35)
 CONTACT_IOU = 0.12
 CLEAR_DIST_REL = 1.5
@@ -31,10 +33,10 @@ def _evasive_onset(tr, t_lo: float, t_hi: float) -> float | None:
     if len(sel) < 3:
         return None
     rs = rel_speed(tr)
-    acc = np.gradient(rs[sel], tr.ts[sel])
-    brake = np.flatnonzero(acc <= -BRAKE_REL)
-    if brake.size:
-        return float(tr.ts[sel[brake[0]]])
+    for k in sel:
+        j = tr.at(tr.ts[k] + BRAKE_WINDOW_SEC)
+        if j > k and (rs[k] - rs[j]) / (tr.ts[j] - tr.ts[k]) >= BRAKE_REL:
+            return float(tr.ts[k])
     for k in range(len(sel) - 1):
         j = tr.at(tr.ts[sel[k]] + 1.0)
         if rs[sel[k]] > 0.5 and heading_change(tr, sel[k], j) >= SWERVE_RAD:
@@ -61,10 +63,13 @@ def detect(ctx: Context) -> list[Event]:
         if not (ps.a.is_vehicle or ps.b.is_vehicle) or ps.iou.max() >= CONTACT_IOU:
             continue
         ttc = np.where(ps.closing_rel > MIN_CLOSING_REL, ps.dist_rel / np.maximum(ps.closing_rel, 1e-6), np.inf)
-        danger = [k for k in np.flatnonzero(ttc < TTC_MAX) if _paths_meet(ps, k)]
-        if not danger:
+        meet = np.zeros(len(ps.t), bool)
+        for k in np.flatnonzero(ttc < TTC_MAX):
+            meet[k] = _paths_meet(ps, k)
+        held = np.convolve(meet.astype(int), np.ones(DANGER_MIN_SAMPLES, int), mode="valid") >= DANGER_MIN_SAMPLES
+        if not held.any():
             continue
-        t_d = ps.t[danger[0]]
+        t_d = ps.t[int(np.argmax(held))]
         onsets = [o for o in (_evasive_onset(tr, t_d - 1.0, t_d + 1.5) for tr in (ps.a, ps.b) if tr.is_vehicle)
                   if o is not None]
         if not onsets:

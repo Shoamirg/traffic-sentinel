@@ -111,17 +111,38 @@ def rider_mask(ctx, person: Track) -> np.ndarray:
     return mask
 
 
-def on_road(ctx, xy: np.ndarray) -> np.ndarray:
+ROAD_ENTER_PX = 24.0        # hysteresis for a track's samples: enter the road this far past the edge...
+ROAD_EXIT_PX = 4.0          # ...and leave only when back within this distance of it
+
+
+def hysteresis(values: np.ndarray, enter: float, leave: float) -> np.ndarray:
+    """True from the first sample >= enter until the next sample < leave (samples in time order)."""
+    out = np.zeros(len(values), bool)
+    inside = False
+    for k, v in enumerate(values):
+        inside = v >= (leave if inside else enter)
+        out[k] = inside
+    return out
+
+
+def on_road(ctx, xy: np.ndarray, track_order: bool = False) -> np.ndarray:
     """True where a ground point is well inside the drawn road area (carriageways + junction box),
     at least ROAD_EDGE_MARGIN_PX from its edge so kerbside people do not count, and on cells that
-    vehicles actually drive through. Falls back to the learned carriageway mask when no layout is drawn."""
+    vehicles actually drive through. Falls back to the learned carriageway mask when no layout is drawn.
+
+    With track_order=True, `xy` is one track's samples in time order and the edge test uses
+    hysteresis (ROAD_ENTER_PX in, ROAD_EXIT_PX out) instead of the single margin: someone walking
+    along the kerb, whose distance to the edge hovers around the margin, would otherwise flicker
+    on and off the road with every pixel of detector noise - i.e. differently on every machine.
+    """
     areas = [c["poly"] for c in ctx.layout.carriageways] + list(ctx.layout.road_areas)
     if ctx.layout.intersection is not None:
         areas.append(ctx.layout.intersection)
     if not areas:
         return ctx.scene.road(xy)
-    drawn = np.array([any(cv2.pointPolygonTest(poly, (float(x), float(y)), True) >= ROAD_EDGE_MARGIN_PX
-                          for poly in areas) for x, y in xy], bool)
+    depth = np.array([max(cv2.pointPolygonTest(poly, (float(x), float(y)), True) for poly in areas)
+                      for x, y in xy], float)
+    drawn = hysteresis(depth, ROAD_ENTER_PX, ROAD_EXIT_PX) if track_order else depth >= ROAD_EDGE_MARGIN_PX
     return drawn & ctx.scene.driven(xy)
 
 

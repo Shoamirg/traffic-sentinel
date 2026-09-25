@@ -28,7 +28,7 @@ def _pedestrians_on(ctx: Context, poly: np.ndarray) -> list[tuple[np.ndarray, np
         on = inside(poly, tr.xy)
         if not on.any():
             continue
-        on &= on_road(ctx, tr.xy) & ~rider_mask(ctx, tr) & ~in_vehicle_mask(ctx, tr)   # road part; no riders/drivers
+        on &= on_road(ctx, tr.xy, track_order=True) & ~rider_mask(ctx, tr) & ~in_vehicle_mask(ctx, tr)   # road part; no riders/drivers
         for refuge in ctx.layout.refuges:
             on &= ~inside(refuge, tr.xy)
         if on.any():
