@@ -24,7 +24,7 @@ YOLO11 files if they are missing. Nothing is downloaded at run time.
 ## Approach
 
 ```
-video ──► frame sampler (10 fps, 1280 px) ──► YOLO11m (COCO road users) ──► ByteTrack-style tracker
+video ──► I/P-frame decoder (10 fps, 1280 px) ──► YOLO11m (COCO road users) ──► ByteTrack-style tracker
                    │                                                            │
                    ├─► lamp probes (signal state) ─┐                           ▼
                    ├─► fire/smoke YOLO (2 fps) ────┤              trajectories (ground points,
@@ -80,6 +80,25 @@ sample videos** by the tools above: `reference.jpg` is one working-resolution fr
 They ship in the repository because the pipeline needs them at run time (no network).
 Rebuilding `prior.npz` on another OS/CPU can differ by a few cell counts (floating-point
 differences in image registration); this does not change the detected events on the samples.
+
+## Runtime
+
+The sample videos are H.264 High 4:2:2, 10-bit, 140 Mbit/s 4K. That profile has no hardware
+decoder before NVIDIA Blackwell (a T4's NVDEC handles 8-bit 4:2:0 only), so decoding is CPU work,
+and the organisers' harness itself decodes every frame once for Part B. Part A therefore decodes
+with PyAV using `skip_frame=NONREF`: the camera's GOP is I-B-B-P, the B-frames are never decoded,
+and the remaining I/P frames are exactly the 10 fps Part A analyses; the scaler writes straight
+to 1280 px and only the signal-lamp crops are converted at full resolution
+(`src/sentinel/video.py`, `SENTINEL_DECODER=cv2` restores the plain OpenCV path).
+
+| C3905 (127.6 s), Part A only | 20 cores | 2 cores |
+|---|---|---|
+| OpenCV, every frame | 80.6 s | 318.7 s |
+| PyAV, reference frames only | 76.6 s | 270.6 s |
+
+`tools/null_solution.py` times the harness alone (`--solution tools/null_solution.py`): that is the
+decode floor on a given machine, and our share of the 3 x duration budget is what remains above it.
+Ultralytics runs with `YOLO_OFFLINE=1`, so it never opens a network connection.
 
 ## Determinism
 

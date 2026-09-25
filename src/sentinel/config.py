@@ -19,6 +19,7 @@ SEED = 0
 WORK_WIDTH = 1280            # frames are downscaled to this width before detection
 PART_A_TARGET_FPS = float(os.environ.get("SENTINEL_PART_A_FPS", 10.0))   # Part A analyses ~10 frames/s
 PART_B_TARGET_FPS = 5.0      # Part B runs its causal tracker at ~5 fps
+PART_A_DECODER = os.environ.get("SENTINEL_DECODER", "av")   # "av": reference frames only (fast); "cv2": every frame
 
 # ---- detector ---------------------------------------------------------------
 DETECTOR_WEIGHTS = os.environ.get("SENTINEL_WEIGHTS", str(WEIGHTS_DIR / "yolo11m.pt"))

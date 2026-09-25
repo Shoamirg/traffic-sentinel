@@ -3,6 +3,7 @@ __pycache__/
 .pytest_cache/
 .coverage
 cache/
+cache_*/
 snaps/
 samples/
 *.MP4

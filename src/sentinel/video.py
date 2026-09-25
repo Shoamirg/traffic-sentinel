@@ -1,7 +1,16 @@
 """Video metadata and strided frame reading.
 
-Skipped frames use ``grab()`` (decode without the BGR conversion/copy), which is
-the cheapest way to stride through H.264 with OpenCV.
+Two readers yield the same (index, t, working frame[, full frame]) tuples:
+
+* ``iter_frames`` - OpenCV, every frame decoded; skipped ones use ``grab()``.
+* ``iter_ref_frames`` - PyAV with ``skip_frame=NONREF``: frames nothing else
+  references (the B-frames of the camera's I-B-B-P GOP) are never decoded, the
+  scaler writes straight to working size, and the full-resolution frame is a
+  lazy view that converts only the slices it is asked for (signal lamps).
+  At 140 Mbit/s 10-bit 4:2:2 decoding is CPU-bound, and the organisers'
+  harness already decodes every frame once more for Part B, so Part A's decode
+  is the part of the time budget we control. Falls back to OpenCV when PyAV is
+  missing or cannot open the file.
 """
 from __future__ import annotations
 
@@ -10,6 +19,11 @@ from typing import Iterator
 
 import cv2
 import numpy as np
+
+try:  # optional fast path; OpenCV is the fallback
+    import av
+except ImportError:  # pragma: no cover
+    av = None
 
 from . import config
 
@@ -84,3 +98,86 @@ def iter_frames(meta: VideoMeta, stride: int, max_seconds: float | None = None,
             idx += 1
     finally:
         cap.release()
+
+
+# BT.601 limited-range YUV -> BGR, the matrix OpenCV's FFmpeg backend applies,
+# so lamp crops read the same colours as the OpenCV path.
+_KR, _KB = 0.299, 0.114
+
+
+class LazyFullFrame:
+    """Full-resolution BGR view of a planar YUV frame; slicing converts only that region."""
+
+    def __init__(self, frame) -> None:
+        self._frame = frame
+        self.shape = (frame.height, frame.width, 3)
+        self._bits = frame.format.components[0].bits
+        chroma = frame.planes[1]
+        self._sub_x = max(1, round(frame.width / chroma.width))
+        self._sub_y = max(1, round(frame.height / chroma.height))
+        dtype = np.uint16 if self._bits > 8 else np.uint8
+        self._planes = []
+        for plane in frame.planes[:3]:
+            row = plane.line_size // np.dtype(dtype).itemsize
+            self._planes.append(np.frombuffer(plane, dtype=dtype).reshape(-1, row)[:plane.height])
+
+    def __getitem__(self, key) -> np.ndarray:
+        ys, xs = key[0], key[1]
+        y0, y1, _ = ys.indices(self.shape[0])
+        x0, x1, _ = xs.indices(self.shape[1])
+        if y1 <= y0 or x1 <= x0:
+            return np.zeros((0, 0, 3), np.uint8)
+        peak = float((1 << self._bits) - 1)
+        scale = peak / 255.0
+        yy = self._planes[0][y0:y1, x0:x1].astype(np.float32) / scale
+        cy = np.arange(y0, y1) // self._sub_y
+        cx = np.arange(x0, x1) // self._sub_x
+        u = self._planes[1][np.ix_(cy, cx)].astype(np.float32) / scale - 128.0
+        v = self._planes[2][np.ix_(cy, cx)].astype(np.float32) / scale - 128.0
+        y = (yy - 16.0) * (255.0 / 219.0)
+        u *= 255.0 / 224.0
+        v *= 255.0 / 224.0
+        r = y + 2 * (1 - _KR) * v
+        b = y + 2 * (1 - _KB) * u
+        g = (y - _KR * r - _KB * b) / (1 - _KR - _KB)
+        return np.clip(np.stack([b, g, r], axis=-1) + 0.5, 0, 255).astype(np.uint8)
+
+
+def iter_ref_frames(meta: VideoMeta, stride: int, max_seconds: float | None = None,
+                    keep_full: bool = False) -> Iterator[tuple]:
+    """Like iter_frames, but decodes reference frames only and keeps one per `stride` frames of time.
+
+    Kept frames sit on the stream's reference-frame grid (e.g. indices 2, 5, 8, ...
+    for I-B-B-P at stride 3); when references are sparser than `stride` every one is kept.
+    """
+    if av is None:
+        yield from iter_frames(meta, stride, max_seconds, keep_full)
+        return
+    try:
+        container = av.open(meta.path)
+    except Exception:  # unreadable by PyAV: fall back rather than fail the video
+        yield from iter_frames(meta, stride, max_seconds, keep_full)
+        return
+    last = int(max_seconds * meta.fps) if max_seconds else None
+    width = round(meta.width * meta.scale)
+    height = round(meta.height * meta.scale)
+    try:
+        stream = container.streams.video[0]
+        stream.thread_type = "AUTO"
+        stream.codec_context.skip_frame = "NONREF"
+        tb = float(stream.time_base)
+        origin = stream.start_time or 0
+        next_idx = 0
+        for frame in container.decode(stream):
+            idx = round((frame.pts - origin) * tb * meta.fps) if frame.pts is not None else next_idx
+            if last is not None and idx >= last:
+                break
+            if idx < next_idx:
+                continue
+            next_idx = idx + stride
+            work = frame.reformat(width=width, height=height, format="bgr24",
+                                  interpolation="AREA").to_ndarray()
+            t = idx / meta.fps
+            yield (idx, t, work, LazyFullFrame(frame)) if keep_full else (idx, t, work)
+    finally:
+        container.close()

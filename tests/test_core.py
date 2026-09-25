@@ -1,7 +1,9 @@
 """Unit tests for segments, tracker, signal classification, geometry and risk maths."""
 from __future__ import annotations
 
+import cv2
 import numpy as np
+import pytest
 
 from sentinel.detector import Detections
 from sentinel.geometry import crossings, enter_leave, polyline_side, signed_side
@@ -169,3 +171,19 @@ def test_shipped_scene_assets_exist():
     from sentinel import config
     for name in ("layout.json", "prior.npz", "reference.jpg", "background.jpg"):
         assert (config.SCENE_DIR / name).is_file(), name
+
+
+# ---- video decoding ----------------------------------------------------------------
+@pytest.mark.parametrize("pix_fmt", ["yuv420p", "yuv422p10le"])
+def test_lazy_full_frame_matches_ffmpeg_conversion(pix_fmt):
+    av = pytest.importorskip("av")
+    from sentinel.video import LazyFullFrame
+    rng = np.random.default_rng(0)
+    bgr = cv2.GaussianBlur(rng.integers(0, 256, (72, 128, 3), dtype=np.uint8), (9, 9), 3)
+    frame = av.VideoFrame.from_ndarray(bgr, format="bgr24").reformat(format=pix_fmt)
+    lazy = LazyFullFrame(frame)
+    ref = frame.reformat(format="bgr24").to_ndarray()
+    crop = lazy[10:50, 20:100]
+    assert lazy.shape == (72, 128, 3) and crop.shape == (40, 80, 3)
+    assert np.abs(crop.astype(int) - ref[10:50, 20:100]).mean() < 3.0
+    assert lazy[5:5, 0:10].size == 0

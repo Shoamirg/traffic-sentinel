@@ -1,6 +1,7 @@
 """YOLO road-user detector (Ultralytics, open weights)."""
 from __future__ import annotations
 
+import os
 from dataclasses import dataclass
 
 import numpy as np
@@ -31,6 +32,9 @@ ROAD_USER_CLASSES = tuple(sorted(config.COCO_TO_TYPE))
 class Detector:
     def __init__(self, weights: str = config.DETECTOR_WEIGHTS, imgsz: int = config.DETECTOR_IMGSZ,
                  conf: float = config.DETECTOR_CONF, classes: tuple[int, ...] | None = ROAD_USER_CLASSES) -> None:
+        # the evaluation runs offline: skip Ultralytics' online check and usage analytics,
+        # which would otherwise open network connections (and wait on timeouts) at import
+        os.environ.setdefault("YOLO_OFFLINE", "1")
         from ultralytics import YOLO
         import torch
 

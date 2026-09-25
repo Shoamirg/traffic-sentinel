@@ -1,5 +1,7 @@
 numpy>=1.24
-opencv-python-headless>=4.8
+opencv-python-headless==5.0.0.93
+av==18.1.0 ; python_version >= "3.11"   # abi3 wheels from 3.11
+av==17.0.0 ; python_version < "3.11"    # last line with cp310 wheels; same API
 scipy>=1.10
 torch>=2.3
 torchvision>=0.18
