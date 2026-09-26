@@ -212,3 +212,13 @@ def test_hysteresis_ignores_flicker_around_one_threshold():
     assert not hysteresis(kerb, 24, 4).any()
     crossing = np.array([0, 10, 30, 50, 20, 8, 3, 0], float)
     assert hysteresis(crossing, 24, 4).tolist() == [False, False, True, True, True, True, False, False]
+
+
+def test_iou_aligned_is_the_diagonal_of_iou_matrix():
+    from sentinel.rules.interaction import iou_aligned
+    rng = np.random.default_rng(3)
+    a = rng.uniform(0, 100, (50, 2)).astype(np.float32)
+    b = rng.uniform(0, 100, (50, 2)).astype(np.float32)
+    boxes_a = np.hstack([a, a + rng.uniform(5, 40, (50, 2)).astype(np.float32)])
+    boxes_b = np.hstack([b, b + rng.uniform(5, 40, (50, 2)).astype(np.float32)])
+    assert np.array_equal(iou_aligned(boxes_a, boxes_b), np.diag(iou_matrix(boxes_a, boxes_b)))

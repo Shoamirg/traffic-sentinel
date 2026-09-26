@@ -111,6 +111,25 @@ organisers' harness with `tools/null_solution.py`, i.e. its own decode of every 
 
 On a Colab T4 (2 x86 vCPUs) the harness floor alone is 387 s, over the 383 s budget.
 
+**Time-budget governor** (`src/sentinel/governor.py`). The organisers do not disclose the
+evaluation CPU, and the test videos use the same 10-bit 4:2:2 format, so Part A adapts per video:
+it times OpenCV decoding 2 s of the video (the harness's own decoder) to predict Part B, keeps
+20% of the duration for the rules, and watches its own progress. Over the plan (80% of the
+budget) it drops fire/smoke to every 5 s, then 5 fps at 960 px; only if it would miss the hard
+deadline (92%) does it switch to I-frames only (2 fps, ~3x cheaper to decode but it loses most
+events), and at the hard deadline it stops and runs the rules on what it has. Partial events
+score; a video over budget scores empty. Harness on C3905, cores pinned, budget 383 s:
+
+| cores | governor | total | events vs full quality |
+|---|---|---|---|
+| 8 | full | 119 s | identical (9/9) |
+| 4 | full | 258 s | identical (9/9) |
+| 2 | I-frames, stopped at 85 s of 128 s | 316 s | 3 events (1/9 kept) |
+
+`SENTINEL_GOVERNOR=0` disables it; the cache/tuning tools never use it. The pair rules
+(accident, near_miss) share one candidate-pair pass with a vectorised IoU, which made all
+rules 2.4-2.9x faster (0.07-0.11 s per video second on one core) with identical events.
+
 `tools/null_solution.py` times the harness alone (`--solution tools/null_solution.py`): that is the
 decode floor on a given machine, and our share of the 3 x duration budget is what remains above it.
 Ultralytics runs with `YOLO_OFFLINE=1`, so it never opens a network connection.

@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import logging
+import time
 from typing import Callable
 
 from . import config, register
@@ -67,4 +68,5 @@ def run_rules(ctx: Context, enabled: set[str] | None = None) -> list[Event]:
 
 
 def detect_video(video_path: str) -> list[Event]:
-    return run_rules(build_context(extract(video_path)))
+    started = time.perf_counter()        # the harness's per-video clock starts just before this call
+    return run_rules(build_context(extract(video_path, governed_since=started)))

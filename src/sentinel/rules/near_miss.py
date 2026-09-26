@@ -14,7 +14,7 @@ import numpy as np
 
 from ..segments import Event
 from . import Context
-from .interaction import candidate_pairs, heading_change, rel_speed, stable_size
+from .interaction import shared_pairs, heading_change, rel_speed, stable_size
 
 TTC_MAX = 1.2               # s
 MIN_CLOSING_REL = 1.5       # sizes/s
@@ -59,7 +59,7 @@ def _paths_meet(ps, k: int) -> bool:
 
 def detect(ctx: Context) -> list[Event]:
     events = []
-    for ps in candidate_pairs(ctx.tracks.usable()):
+    for ps in shared_pairs(ctx):
         if not (ps.a.is_vehicle or ps.b.is_vehicle) or ps.iou.max() >= CONTACT_IOU:
             continue
         ttc = np.where(ps.closing_rel > MIN_CLOSING_REL, ps.dist_rel / np.maximum(ps.closing_rel, 1e-6), np.inf)

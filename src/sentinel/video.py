@@ -145,13 +145,22 @@ class LazyFullFrame:
         return np.clip(np.stack([b, g, r], axis=-1) + 0.5, 0, 255).astype(np.uint8)
 
 
+@dataclass
+class ReadControl:
+    """Knobs the time-budget governor turns while a video is being read (checked between frames)."""
+    keyframes_only: bool = False    # decode I-frames only (~3x cheaper; 2 fps on this camera)
+    stride_mult: int = 1            # keep every stride*stride_mult-th frame of time
+
+
 def iter_ref_frames(meta: VideoMeta, stride: int, max_seconds: float | None = None,
-                    keep_full: bool = False) -> Iterator[tuple]:
+                    keep_full: bool = False, control: ReadControl | None = None) -> Iterator[tuple]:
     """Like iter_frames, but decodes reference frames only and keeps one per `stride` frames of time.
 
     Kept frames sit on the stream's reference-frame grid (e.g. indices 2, 5, 8, ...
     for I-B-B-P at stride 3); when references are sparser than `stride` every one is kept.
+    `control` may switch to keyframes-only decoding or a longer stride mid-stream.
     """
+    control = control or ReadControl()
     if av is None:
         yield from iter_frames(meta, stride, max_seconds, keep_full)
         return
@@ -166,17 +175,21 @@ def iter_ref_frames(meta: VideoMeta, stride: int, max_seconds: float | None = No
     try:
         stream = container.streams.video[0]
         stream.thread_type = "AUTO"
-        stream.codec_context.skip_frame = "NONREF"
+        skip = "NONREF"
+        stream.codec_context.skip_frame = skip
         tb = float(stream.time_base)
         origin = stream.start_time or 0
         next_idx = 0
         for frame in container.decode(stream):
+            wanted = "NONKEY" if control.keyframes_only else "NONREF"
+            if wanted != skip:
+                skip = stream.codec_context.skip_frame = wanted
             idx = round((frame.pts - origin) * tb * meta.fps) if frame.pts is not None else next_idx
             if last is not None and idx >= last:
                 break
             if idx < next_idx:
                 continue
-            next_idx = idx + stride
+            next_idx = idx + stride * control.stride_mult
             work = frame.reformat(width=width, height=height, format="bgr24",
                                   interpolation="AREA").to_ndarray()
             t = idx / meta.fps

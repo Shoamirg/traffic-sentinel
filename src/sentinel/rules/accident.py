@@ -18,7 +18,7 @@ import numpy as np
 
 from ..segments import Event
 from . import Context
-from .interaction import candidate_pairs, rel_speed, stable_size
+from .interaction import shared_pairs, rel_speed, stable_size
 
 CONTACT_IOU = 0.15
 CONTACT_DIST_REL = 0.5
@@ -73,7 +73,7 @@ def _crash(ps, k: int) -> float | None:
 
 def detect(ctx: Context) -> list[Event]:
     events = []
-    for ps in candidate_pairs(ctx.tracks.usable()):
+    for ps in shared_pairs(ctx):
         if not (ps.a.is_vehicle or ps.b.is_vehicle):
             continue
         for k in np.flatnonzero(ps.iou >= CONTACT_IOU):

@@ -25,6 +25,7 @@ from .scene import Layout
 from .signal import lamp_score, locate_lamps
 from .tracker import ByteTracker
 from .tracks import Track, TrackSet
+from .governor import Governor
 from .video import VideoMeta, iter_frames, iter_ref_frames, prefetch, read_meta, stride_for
 
 THUMB_WIDTH = 480
@@ -41,6 +42,7 @@ class Extraction:
     fire: list[tuple[float, Detections]]            # (t, fire/smoke detections), every FIRE_EVERY_SEC
     frame_dets: list[tuple[float, Detections]]      # (t, road-user detections) per analysed frame
     transform: np.ndarray = field(default_factory=lambda: register.IDENTITY.copy())  # reference -> video
+    notes: list[str] = field(default_factory=list)  # time-budget governor decisions, if it ran
 
 
 class _Batcher:
@@ -94,12 +96,15 @@ def _build_tracks(raw: dict[int, dict], frame_times: list[float], size: tuple[in
 def extract(video_path: str, detector: Detector | None = None, layout: Layout | None = None,
             target_fps: float = config.PART_A_TARGET_FPS,
             progress: Callable[[float], None] | None = None,
-            max_seconds: float | None = None) -> Extraction:
+            max_seconds: float | None = None, governed_since: float | None = None) -> Extraction:
+    """Detect, track and probe one video. With governed_since (the perf_counter() at which the
+    harness's clock started) the time-budget governor may degrade or cut the analysis."""
     meta = read_meta(video_path)
     stride = stride_for(meta.fps, target_fps)
-    thumb_stride = max(1, round(THUMB_EVERY_SEC * meta.fps / stride))
-    fire_stride = max(1, round(config.FIRE_EVERY_SEC * meta.fps / stride))
+    thumb_every = max(1, round(THUMB_EVERY_SEC * meta.fps / stride)) * stride       # in video frames
     total = min(meta.n_frames, max_seconds * meta.fps) if max_seconds else meta.n_frames
+    gov = Governor(meta, governed_since if governed_since is not None else 0.0,
+                   enabled=governed_since is not None and config.GOVERNOR and config.PART_A_DECODER == "av")
 
     tracker = ByteTracker()
     raw: dict[int, dict] = {}
@@ -114,7 +119,9 @@ def extract(video_path: str, detector: Detector | None = None, layout: Layout | 
             rec["box"].append(box.copy())
             rec["cls"].append(cls)
 
-    roads = _Batcher(detector or shared_detector(), on_dets)
+    road_model = detector or shared_detector()
+    default_imgsz = road_model.imgsz
+    roads = _Batcher(road_model, on_dets)
     fire_model = fire_detector()
     fires = _Batcher(fire_model, lambda t, d: fire.append((t, d))) if fire_model is not None else None
     lamps = _LampProbe(layout or Layout.load(), meta.scale)
@@ -122,29 +129,47 @@ def extract(video_path: str, detector: Detector | None = None, layout: Layout | 
     frame_times: list[float] = []
     thumbs, thumb_times = [], []
     size = (0, 0)
-    reader = iter_ref_frames if config.PART_A_DECODER == "av" else iter_frames
-    for n, (idx, t, frame, full) in enumerate(prefetch(reader(meta, stride, max_seconds, keep_full=True))):
-        if n == 0:
-            lamps.setup(frame, full)
-        size = (frame.shape[1], frame.shape[0])
-        frame_times.append(t)
-        lamps(full)
-        if n % thumb_stride == 0:
-            h = round(frame.shape[0] * THUMB_WIDTH / frame.shape[1])
-            thumbs.append(cv2.resize(frame, (THUMB_WIDTH, h), interpolation=cv2.INTER_AREA))
-            thumb_times.append(t)
-        roads.add(t, frame)
-        if fires is not None and n % fire_stride == 0:
-            fires.add(t, frame)
-        if progress is not None and n % 50 == 0 and total:
-            progress(min(1.0, idx / total))
-    roads.flush()
-    if fires is not None:
-        fires.flush()
+    gov.plan()
+    if config.PART_A_DECODER == "av":
+        frames = iter_ref_frames(meta, stride, max_seconds, keep_full=True, control=gov.control)
+    else:
+        frames = iter_frames(meta, stride, max_seconds, keep_full=True)
+    next_thumb = next_fire = 0
+    try:
+        for n, (idx, t, frame, full) in enumerate(prefetch(frames)):
+            if not gov.update(t):
+                break
+            road_model.imgsz = gov.mode.imgsz or default_imgsz
+            if n == 0:
+                lamps.setup(frame, full)
+            size = (frame.shape[1], frame.shape[0])
+            frame_times.append(t)
+            lamps(full)
+            if idx >= next_thumb:
+                next_thumb = idx + thumb_every
+                h = round(frame.shape[0] * THUMB_WIDTH / frame.shape[1])
+                thumbs.append(cv2.resize(frame, (THUMB_WIDTH, h), interpolation=cv2.INTER_AREA))
+                thumb_times.append(t)
+            roads.add(t, frame)
+            if fires is not None and idx >= next_fire:
+                next_fire = idx + max(1, round(gov.mode.fire_every_sec * meta.fps / stride)) * stride
+                fires.add(t, frame)
+            if progress is not None and n % 50 == 0 and total:
+                progress(min(1.0, idx / total))
+        roads.flush()
+        if fires is not None:
+            fires.flush()
+    finally:
+        road_model.imgsz = default_imgsz      # the detector is shared with Part B
 
     duration = meta.duration or (frame_times[-1] if frame_times else 0.0)
     if max_seconds:
         duration = min(duration, max_seconds)
+    if gov.stopped_at is not None and frame_times:
+        duration = min(duration, frame_times[-1] + 1.0 / target_fps)
+    if gov.enabled:
+        gov.log_lines.append(gov.summary())
+        print(f"[governor] {gov.summary()}", flush=True)
     return Extraction(
         meta=meta,
         tracks=_build_tracks(raw, frame_times, size, duration),
@@ -154,6 +179,7 @@ def extract(video_path: str, detector: Detector | None = None, layout: Layout | 
         fire=fire,
         frame_dets=frame_dets,
         transform=lamps.transform,
+        notes=gov.log_lines,
     )
 
 

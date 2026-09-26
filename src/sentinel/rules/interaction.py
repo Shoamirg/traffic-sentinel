@@ -30,6 +30,18 @@ def _nearest(ts: np.ndarray, t: np.ndarray) -> np.ndarray:
     return np.where(np.abs(ts[j - 1] - t) <= np.abs(ts[j] - t), j - 1, j)
 
 
+def iou_aligned(a: np.ndarray, b: np.ndarray) -> np.ndarray:
+    """IoU of a[k] with b[k] for every k: the diagonal of iou_matrix(a, b), same arithmetic, in one pass."""
+    x1 = np.maximum(a[:, 0], b[:, 0])
+    y1 = np.maximum(a[:, 1], b[:, 1])
+    x2 = np.minimum(a[:, 2], b[:, 2])
+    y2 = np.minimum(a[:, 3], b[:, 3])
+    inter = np.clip(x2 - x1, 0, None) * np.clip(y2 - y1, 0, None)
+    area_a = (a[:, 2] - a[:, 0]) * (a[:, 3] - a[:, 1])
+    area_b = (b[:, 2] - b[:, 0]) * (b[:, 3] - b[:, 1])
+    return inter / (area_a + area_b - inter + 1e-6)
+
+
 def pair_series(a: Track, b: Track) -> PairSeries | None:
     lo, hi = max(a.start, b.start), min(a.end, b.end)
     if hi - lo < 0.5 or len(b.ts) < 2:
@@ -48,9 +60,7 @@ def pair_series(a: Track, b: Track) -> PairSeries | None:
     size = 0.5 * (a.size[ia] + b.size[ib])
     dist = np.linalg.norm(dp, axis=1)
     closing = -(dp * dv).sum(axis=1) / np.maximum(dist, 1e-6)
-    boxes_a = np.asarray(a.box)[ia]
-    boxes_b = np.asarray(b.box)[ib]
-    iou = np.array([iou_matrix(boxes_a[k:k + 1], boxes_b[k:k + 1])[0, 0] for k in range(len(t))])
+    iou = iou_aligned(np.asarray(a.box)[ia], np.asarray(b.box)[ib])
     return PairSeries(a, b, t, ia, ib, dist / size, closing / size, iou)
 
 
@@ -76,6 +86,15 @@ def candidate_pairs(tracks: list[Track]) -> list[PairSeries]:
             if ps is not None and ps.dist_rel.min() < MAX_PAIR_DIST_REL:
                 out.append(ps)
     return out
+
+
+def shared_pairs(ctx) -> list[PairSeries]:
+    """candidate_pairs of the video's usable tracks, computed once and shared by the pair rules."""
+    cached = getattr(ctx.tracks, "_candidate_pairs", None)
+    if cached is None:
+        cached = candidate_pairs(ctx.tracks.usable())
+        object.__setattr__(ctx.tracks, "_candidate_pairs", cached)
+    return cached
 
 
 def rel_speed(tr: Track) -> np.ndarray:
