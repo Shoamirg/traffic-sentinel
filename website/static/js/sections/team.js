@@ -15,9 +15,9 @@ export function renderHero(ctx) {
   const totalEvents = videos.reduce((a, v) => a + arr(v.events).length, 0);
   const stats = [
     ['Score A · events', dev.score_a !== undefined ? fmtNum(dev.score_a, 3) : '—'],
-    ['Score B · risk', dev.score_b !== undefined ? fmtNum(dev.score_b, 3) : '—'],
-    ['Event classes', '14'],
-    ['CPU speed', xrt ? `${fmtNum(xrt, 2)}× RT` : '—'],
+    ['Score B · risk', dev.score_b != null ? fmtNum(dev.score_b, 3) : 'not scored'],
+    ['Event classes', '9 of 14 output'],
+    ['Time per video', xrt ? `${fmtNum(xrt, 2)}× its length` : '—'],
     ['Sample videos', String(videos.length)],
     ['Events found', String(totalEvents)],
   ];

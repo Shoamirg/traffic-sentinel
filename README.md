@@ -158,9 +158,11 @@ AGPL-3.0 (see `LICENSE`), as required by the Ultralytics code and weights the pi
 
 ## Team — AMITY-Tigers
 
-- Shoamir Shorustamov — captain
-- Afzal Qodirov
-- Zohirjon Shokiriy
+| Member | Role | Owns |
+|---|---|---|
+| Shoamir Shorustamov | Team captain · pipeline & submission | Detection and tracking pipeline (YOLO11 + ByteTrack-style tracker) and the 14 event rules; Part B accident-risk model (closest-approach conflicts, calibrated on the samples); Time-budget governor and runtime work: reference-frame decoding, x86/T4 testing; Final submission package, reproducibility and README |
+| Afzal Qodirov | Data & evaluation | EDA of the four sample videos; Dev-set labels of the samples and their checking (labels/CHECKLIST.md); Dev-set evaluation with the official metric and error analysis |
+| Zohirjon Shokiriy | Website & live demo | Team website and live-demo deployment; Visualisations: event timelines, risk curves, annotated videos; Report page |
 
 ## Results
 

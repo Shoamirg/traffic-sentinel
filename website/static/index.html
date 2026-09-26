@@ -82,7 +82,7 @@
         <figure class="pipeline">
           <div id="pipeline-svg" class="pipeline-svg"></div>
           <figcaption>Two independent paths. Part A sees the whole clip offline; Part B only ever sees frames up to "now".</figcaption>
-          <noscript><p>Part A: frames → YOLO11 detector (learned) → ByteTrack-style tracker → trajectories → learned scene model + hand-drawn layout → per-class rules → segment post-processing → events. Part B: frames (causal) → online tracker → time-to-collision + hard-braking hazard → logistic calibration → fast-attack/slow-decay smoothing → risk.</p></noscript>
+          <noscript><p>Part A: frames → YOLO11 detector (learned) → ByteTrack-style tracker → trajectories → learned scene model + hand-drawn layout → per-class rules → segment post-processing → events. Part B: frames (causal) → online tracker → for moving vehicles whose paths meet within 3 s, the deceleration needed to avoid contact (DRAC) + observed hard braking → 0.5 s persistence → logistic calibrated on the samples → fast-attack/slow-decay smoothing → risk.</p></noscript>
         </figure>
 
         <div class="cols-3 approach-cards">
@@ -90,7 +90,7 @@
             <h3>Models &amp; data</h3>
             <ul class="tight">
               <li><strong>YOLO11m</strong> (COCO-pretrained) for person, car, bus, truck, motorcycle, bicycle and animals at 1280 px, ~10 analysed fps.</li>
-              <li><strong>Fire/smoke detector</strong> fine-tuned on public fire/smoke imagery. <span class="todo">TODO: dataset name + size.</span></li>
+              <li><strong>Fire/smoke detector</strong>: YOLO11s fine-tuned on <strong>D-Fire</strong> (CC0; 17,221 train / 4,306 test images), 75 epochs, seed 0, mAP50 0.79 on the D-Fire test split; checked every 1 s of video. Details in <code>weights/FIRE_SMOKE.md</code>.</li>
               <li><strong>Scene model</strong>: a 48 × 27 grid learned from vehicle tracks - visit counts (road mask), 8-bin heading histograms (lane directions), dwell time (queue zones). A prior from the sample videos is blended with the test clip's own tracks.</li>
               <li><strong>Signal state</strong>: lamp brightness in a drawn ROI, on/off threshold chosen per video with Otsu.</li>
             </ul>
@@ -107,11 +107,11 @@
           <article class="card">
             <h3>Rebuild it in five steps</h3>
             <ol class="tight">
-              <li>Sample frames to ~10 fps at 1280 px width; detect with YOLO11m (conf 0.25).</li>
+              <li>Decode only the reference (I/P) frames of the 10-bit 4:2:2 stream - exactly ~10 fps - scaled to 1280 px; detect with YOLO11m (conf 0.25). A time governor degrades quality only if the machine is too slow for the budget.</li>
               <li>Track with two-stage (high/low confidence) IoU association and constant-velocity prediction; drop tracks under 5 observations; smooth positions over 0.6 s.</li>
               <li>Accumulate the scene grid from moving vehicles (&gt; 25 px/s) and cells with ≥ 3 visits.</li>
-              <li>Run the 14 per-class rules below over tracks + scene + layout.</li>
-              <li>Merge segments closer than 1.0 s; drop segments shorter than 0.5 s.</li>
+              <li>Run the per-class rules below over tracks + scene + layout; 9 classes are output (5 were dropped for near-zero precision on our dev labels).</li>
+              <li>Merge same-class segments (1.0 s gap; 5 s for jaywalking episodes, none for failure_to_yield passes); drop segments shorter than 0.5 s.</li>
             </ol>
           </article>
         </div>

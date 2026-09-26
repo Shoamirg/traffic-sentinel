@@ -100,6 +100,7 @@ export function classColor(label) {
 export const objectColor = (name) => objectPalette.get(name) || '#c9d1d9';
 export const classList = () => classInfo.map((c) => c.id);
 export const classRule = (id) => (classInfo.find((c) => c.id === id) || {}).rule || '';
+export const classStatus = (id) => (classInfo.find((c) => c.id === id) || {}).status || '';
 
 /** Order labels the canonical way (14-class order), unknown labels last. */
 export function sortLabels(labels) {

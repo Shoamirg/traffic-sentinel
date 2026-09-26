@@ -24,9 +24,9 @@ function examplesPerClass(videos, jumpTo) {
 }
 
 function scoreTiles(dev) {
-  const tiles = [['Score A', dev.score_a, 'event detection (temporal IoU F1)'], ['Score B', dev.score_b, 'risk anticipation'], ['Model score', dev.model_score, 'combined']];
+  const tiles = [['Score A', dev.score_a, 'event detection (temporal IoU F1)'], ['Score B', dev.score_b, 'risk anticipation (not scored: no accidents in the samples)'], ['Model score', dev.model_score, 'combined']];
   return h('div.tiles', {}, tiles.filter(([, v]) => v !== undefined).map(([k, v, note]) => h('div.tile', {},
-    h('div.tile-k', {}, k), h('div.tile-v', {}, fmtNum(v, 3)), h('div.tile-note', {}, note))));
+    h('div.tile-k', {}, k), h('div.tile-v', {}, v === null ? '—' : fmtNum(v, 3)), h('div.tile-note', {}, note))));
 }
 
 function bar(v) {
@@ -60,8 +60,8 @@ function ablationTable(rows) {
   if (!rows.length) return null;
   const base = num(rows[0].score_a);
   return h('div.table-wrap', { tabindex: '0', role: 'region', 'aria-label': 'Ablations' },
-    h('table.data', {}, h('caption', {}, 'Ablations - Score A when one component is removed or swapped'),
-      h('thead', {}, h('tr', {}, ['Variant', 'Score A', 'Δ vs full', 'What changed'].map((x) => h('th', { scope: 'col' }, x)))),
+    h('table.data', {}, h('caption', {}, 'Score A by development stage, on our (draft) dev labels'),
+      h('thead', {}, h('tr', {}, ['Stage', 'Score A', 'Δ vs first', 'What changed'].map((x) => h('th', { scope: 'col' }, x)))),
       h('tbody', {}, rows.map((r, i) => {
         const d = num(r.score_a) - base;
         return h('tr', {}, h('th', { scope: 'row' }, r.name || ''), h('td.num', {}, fmtNum(r.score_a, 3)),
@@ -73,11 +73,11 @@ function ablationTable(rows) {
 function runtimeTable(rows) {
   if (!rows.length) return null;
   return h('div.table-wrap', { tabindex: '0', role: 'region', 'aria-label': 'Runtime' },
-    h('table.data', {}, h('caption', {}, 'Runtime on CPU'),
-      h('thead', {}, h('tr', {}, ['Video', 'Length', 'Processing', 'Speed'].map((x) => h('th', { scope: 'col' }, x)))),
+    h('table.data', {}, h('caption', {}, 'Runtime - official harness, Part A + Part B (budget: 3× video length)'),
+      h('thead', {}, h('tr', {}, ['Video', 'Length', 'Processing', 'Of video length'].map((x) => h('th', { scope: 'col' }, x)))),
       h('tbody', {}, rows.map((r) => h('tr', {}, h('th', { scope: 'row' }, r.video || ''),
         h('td.num', {}, fmtTime(r.duration, 0)), h('td.num', {}, `${fmtNum(r.seconds, 1)} s`),
-        h('td.num', {}, `${fmtNum(r.x_realtime, 2)}× real time`))))));
+        h('td.num', {}, `${fmtNum(r.x_realtime, 2)}×`))))));
 }
 
 function failures(list, jumpTo, videos) {

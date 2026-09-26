@@ -1,22 +1,23 @@
 {
-  "placeholder": true,
-  "summary": "TODO: two or three sentences - what the system does, the dev-set score, and the single biggest lesson.",
+  "summary": "Traffic Sentinel turns one fixed junction camera into time-stamped traffic events and a causal accident-risk curve: YOLO11 detections, a ByteTrack-style tracker, a scene model learned from the sample videos and one rule per event class, run inside the organisers' time budget on any machine by a time governor. On our own (draft) labels of the four samples it reaches Score A 0.35, up from 0.13 before tuning. The biggest lesson: with a macro-F1 over every predicted class, knowing which classes not to predict mattered as much as improving the ones we keep.",
   "worked": [
-    "TODO: Learning the lane directions from trajectories instead of drawing them - wrong_way and illegal_u_turn became camera-agnostic.",
-    "TODO: Chaining stationary intervals across tracker ID switches - stopped_vehicle stopped fragmenting.",
-    "TODO: Per-video Otsu threshold on the signal lamp ROI - red-light state survives day/night changes.",
-    "TODO: Fast-attack / slow-decay smoothing on the risk score - alarms fire early and do not flicker."
+    "Decoding only the reference frames (I/P) of the camera's 10-bit 4:2:2 stream: exactly the 10 fps Part A needs, 15-28% faster, and the only way to stay inside the budget on small CPUs.",
+    "A time governor that probes the machine per video, degrades quality step by step and returns partial events at a hard deadline instead of an empty score.",
+    "Judging failure_to_yield on the vehicle's whole box and one segment per pass: F1 0.08 -> 0.49 on our dev labels.",
+    "Scoring Part B by the deceleration needed to avoid a conflict (DRAC) between a moving vehicle and a road user whose paths meet, calibrated so normal traffic sits at 0.03-0.07 and only 1-2 moments per video reach 0.5.",
+    "A perturbation test (jittering detections like a different GPU would) that found exactly the events that differed between our GPU box and a T4, and led to hysteresis and ID-switch chaining for pedestrians."
   ],
   "didnt": [
-    "TODO: Accident onset is often late by ~1 s because image-space box overlap precedes real contact (or never happens under occlusion).",
-    "TODO: Headlight glare and rain streaks still cause short fire_smoke false positives at night.",
-    "TODO: Classes that depend on hand-drawn layout (illegal_turn, stop_line) do nothing on a camera without a layout.",
-    "TODO: CPU inference runs at roughly real time only with frame sub-sampling; small pedestrians far from the camera are missed."
+    "near_miss, illegal_u_turn and stopped_vehicle: tracker ID swaps between overlapping cars and signal queues produced almost only false positives (0-1 true of 34 predicted), so we stopped predicting them.",
+    "Riders on scooters and bicycles are detected as 'person' and still cause some jaywalking false positives.",
+    "Classes that depend on the signal phase or lane rules (red_light, illegal_turn, legality of U-turns) cannot be verified from this camera: most signal heads face away from it.",
+    "A stored empty-road background for obstacles: the samples span daylight to dusk, and it flagged whole videos until we switched to each video's own median.",
+    "Our dev labels are drafted from rendered frames and still await a teammate's confirmation; the scores are in-sample."
   ],
   "next": [
-    "TODO: Ground-plane homography so speeds and distances are metric instead of size-normalised pixels.",
-    "TODO: A learned temporal classifier on track features for accident / near_miss instead of hand thresholds.",
-    "TODO: Automatic layout proposals (stop lines, crossings) from the learned queue zones and pedestrian flows.",
-    "TODO: Per-lane event statistics in the operator dashboard."
+    "A small learned classifier on track features (relative speed, heading change, box overlap) for accident and near_miss instead of thresholds.",
+    "A rider/pedestrian classifier: associate a 'person' with the two-wheeler under it over time rather than per frame.",
+    "A ground-plane homography so speeds and gaps are metric instead of box-size-normalised.",
+    "Confirm the dev labels with two annotators and report inter-annotator agreement next to the scores."
   ]
 }

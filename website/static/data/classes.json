@@ -8,12 +8,14 @@
   {
    "id": "near_miss",
    "color": "#ff8fb1",
-   "rule": "A pair on a collision course (short time-to-contact while closing fast) where one party brakes hard or swerves, and the boxes never overlap. Start = onset of evasive action; end = the pair is apart and opening."
+   "rule": "A pair on a collision course (short time-to-contact while closing fast) where one party brakes hard or swerves, and the boxes never overlap. Start = onset of evasive action; end = the pair is apart and opening.",
+   "status": "Not output: 0 true / 14 false positives on our dev labels (tracker ID swaps, distant overlapping boxes)."
   },
   {
    "id": "red_light",
    "color": "#b46bff",
-   "rule": "Vehicle crosses a stop line from the approach side after its signal has been red for a grace period (amber-to-red runs are not flagged). Signal state comes from the lamp ROI, thresholded per video with Otsu."
+   "rule": "Vehicle crosses a stop line from the approach side after its signal has been red for a grace period (amber-to-red runs are not flagged). Signal state comes from the lamp ROI, thresholded per video with Otsu.",
+   "status": "Not output: 0 / 1 - most signal heads face away from the camera."
   },
   {
    "id": "wrong_way",
@@ -23,12 +25,14 @@
   {
    "id": "illegal_u_turn",
    "color": "#ffab7a",
-   "rule": "The unwrapped heading of the moving part of a track rotates by about 180 degrees within a short window. Turns inside a u_turn_allowed polygon are legal and skipped."
+   "rule": "The unwrapped heading of the moving part of a track rotates by about 180 degrees within a short window. Turns inside a u_turn_allowed polygon are legal and skipped.",
+   "status": "Not output: 0 / 7 - ID switches, and U-turns here look routine with no visible prohibition."
   },
   {
    "id": "stopped_vehicle",
    "color": "#3b9dff",
-   "rule": "Stationary on the carriageway for at least 10 s, chained across tracker ID switches by location, and not part of a queue in a learned queue zone."
+   "rule": "Stationary on the carriageway for at least 10 s, chained across tracker ID switches by location, and not part of a queue in a learned queue zone.",
+   "status": "Not output: 1 / 12 - signal queues and mid-junction waits look like stopped vehicles."
   },
   {
    "id": "jaywalking",
@@ -63,7 +67,8 @@
   {
    "id": "road_obstacle",
    "color": "#d6c3a5",
-   "rule": "Animals detected on the road, plus a background-change detector on 1 fps thumbnails: a short-term median that differs from the long-term background on the carriageway and is not explained by any tracked road user."
+   "rule": "Animals detected on the road, plus a background-change detector on 1 fps thumbnails: a short-term median that differs from the long-term background on the carriageway and is not explained by any tracked road user.",
+   "status": "Not output: 0 / 1 on the samples; kept in the code with a per-video, lighting-robust background."
   },
   {
    "id": "fire_smoke",
