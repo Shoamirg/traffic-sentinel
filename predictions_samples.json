@@ -29,13 +29,8 @@
      "red_light"
     ],
     [
-     80.15,
-     89.16,
-     "road_obstacle"
-    ],
-    [
-     104.27,
-     118.08,
+     108.88,
+     118.49,
      "jaywalking"
     ],
     [
@@ -59,49 +54,19 @@
      "illegal_u_turn"
     ],
     [
-     139.21,
-     150.22,
-     "road_obstacle"
-    ],
-    [
-     140.91,
-     163.23,
-     "jaywalking"
-    ],
-    [
-     170.64,
-     173.34,
+     146.81,
+     147.31,
      "near_miss"
     ],
     [
-     203.57,
+     203.87,
      208.68,
      "near_miss"
-    ],
-    [
-     226.3,
-     256.32,
-     "road_obstacle"
-    ],
-    [
-     237.4,
-     243.61,
-     "jaywalking"
-    ],
-    [
-     252.42,
-     259.63,
-     "jaywalking"
     ],
     [
      297.66,
      327.29,
      "stop_line"
-    ],
-    [
-     314.78,
-     316.88,
-     "near_miss"
     ]
    ],
    "risk": [
@@ -40915,7 +40880,7 @@
      "stop_line"
     ],
     [
-     2.67,
+     3.17,
      6.17,
      "jaywalking"
     ],
@@ -40925,7 +40890,7 @@
      "stopped_vehicle"
     ],
     [
-     9.38,
+     10.58,
      18.18,
      "jaywalking"
     ],
@@ -40940,17 +40905,12 @@
      "stopped_vehicle"
     ],
     [
-     54.62,
-     56.92,
-     "near_miss"
-    ],
-    [
      61.73,
      94.66,
      "stop_line"
     ],
     [
-     77.34,
+     78.24,
      87.15,
      "jaywalking"
     ],
@@ -40965,9 +40925,9 @@
      "near_miss"
     ],
     [
-     126.2,
-     141.21,
-     "road_obstacle"
+     123.49,
+     123.99,
+     "near_miss"
     ],
     [
      129.0,
@@ -40980,14 +40940,14 @@
      "jaywalking"
     ],
     [
-     176.14,
-     180.45,
-     "jaywalking"
-    ],
-    [
      177.24,
      178.24,
      "failure_to_yield"
+    ],
+    [
+     177.24,
+     180.45,
+     "jaywalking"
     ],
     [
      177.25,
@@ -41010,17 +40970,12 @@
      "failure_to_yield"
     ],
     [
-     233.3,
-     236.0,
-     "jaywalking"
-    ],
-    [
      233.7,
      235.0,
      "near_miss"
     ],
     [
-     244.01,
+     243.91,
      245.01,
      "near_miss"
     ],
@@ -41030,7 +40985,7 @@
      "jaywalking"
     ],
     [
-     293.46,
+     294.36,
      298.56,
      "jaywalking"
     ]
@@ -79146,19 +79101,9 @@
      "stopped_vehicle"
     ],
     [
-     4.07,
-     317.38,
-     "road_obstacle"
-    ],
-    [
      7.27,
      37.1,
      "stop_line"
-    ],
-    [
-     10.48,
-     13.28,
-     "jaywalking"
     ],
     [
      17.88,
@@ -79166,19 +79111,9 @@
      "near_miss"
     ],
     [
-     24.39,
+     25.89,
      40.61,
      "failure_to_yield"
-    ],
-    [
-     26.59,
-     29.0,
-     "jaywalking"
-    ],
-    [
-     38.41,
-     39.01,
-     "near_miss"
     ],
     [
      49.92,
@@ -79197,7 +79132,7 @@
     ],
     [
      85.35,
-     189.56,
+     146.71,
      "jaywalking"
     ],
     [
@@ -79211,6 +79146,11 @@
      "stopped_vehicle"
     ],
     [
+     150.62,
+     186.15,
+     "jaywalking"
+    ],
+    [
      151.02,
      152.12,
      "near_miss"
@@ -79221,22 +79161,12 @@
      "stopped_vehicle"
     ],
     [
-     232.3,
-     234.9,
-     "near_miss"
-    ],
-    [
-     251.62,
-     253.22,
-     "jaywalking"
-    ],
-    [
      253.72,
      277.14,
      "stop_line"
     ],
     [
-     256.42,
+     256.92,
      265.93,
      "jaywalking"
     ],
@@ -79244,16 +79174,6 @@
      258.73,
      278.44,
      "stopped_vehicle"
-    ],
-    [
-     273.44,
-     274.04,
-     "near_miss"
-    ],
-    [
-     276.24,
-     277.54,
-     "near_miss"
     ],
     [
      279.05,
@@ -117397,19 +117317,9 @@
   "C3905.MP4": {
    "events": [
     [
-     4.07,
-     127.19,
-     "road_obstacle"
-    ],
-    [
      5.07,
      28.8,
      "stopped_vehicle"
-    ],
-    [
-     8.98,
-     10.28,
-     "jaywalking"
     ],
     [
      9.58,
@@ -117418,7 +117328,7 @@
     ],
     [
      18.08,
-     22.39,
+     18.99,
      "near_miss"
     ],
     [
@@ -117427,19 +117337,9 @@
      "jaywalking"
     ],
     [
-     33.7,
-     34.8,
-     "near_miss"
-    ],
-    [
      36.5,
      45.81,
      "failure_to_yield"
-    ],
-    [
-     53.62,
-     54.82,
-     "jaywalking"
     ],
     [
      56.32,
@@ -117452,29 +117352,9 @@
      "illegal_u_turn"
     ],
     [
-     68.13,
-     71.94,
-     "jaywalking"
-    ],
-    [
      76.94,
      114.48,
      "stop_line"
-    ],
-    [
-     87.65,
-     88.76,
-     "jaywalking"
-    ],
-    [
-     92.36,
-     94.06,
-     "jaywalking"
-    ],
-    [
-     104.77,
-     105.57,
-     "failure_to_yield"
     ]
    ],
    "risk": [
@@ -132786,33 +132666,33 @@
    "duration": 340.34,
    "budget_sec": 1021.0,
    "errors": [],
-   "part_a_sec": 183.3,
+   "part_a_sec": 88.7,
    "part_b_sec": 103.8,
-   "total_sec": 287.0
+   "total_sec": 192.4
   },
   "C3897.MP4": {
    "duration": 317.82,
    "budget_sec": 953.5,
    "errors": [],
-   "part_a_sec": 169.6,
-   "part_b_sec": 96.3,
-   "total_sec": 265.9
+   "part_a_sec": 82.3,
+   "part_b_sec": 96.9,
+   "total_sec": 179.2
   },
   "C3902.MP4": {
    "duration": 317.82,
    "budget_sec": 953.5,
    "errors": [],
-   "part_a_sec": 199.0,
-   "part_b_sec": 97.6,
-   "total_sec": 296.7
+   "part_a_sec": 86.2,
+   "part_b_sec": 97.9,
+   "total_sec": 184.1
   },
   "C3905.MP4": {
    "duration": 127.63,
    "budget_sec": 382.9,
    "errors": [],
-   "part_a_sec": 71.7,
-   "part_b_sec": 35.5,
-   "total_sec": 107.2
+   "part_a_sec": 31.2,
+   "part_b_sec": 35.8,
+   "total_sec": 66.9
   }
  }
 }
