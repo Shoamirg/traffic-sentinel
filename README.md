@@ -53,7 +53,7 @@ handed; it never opens the video and never reads Part A output.
 ```
 solution.py             interface for the harness (thin adapter)
 src/sentinel/           pipeline: video, detector, tracker, tracks, scene, signal, geometry, rules/, risk, render, demo
-scene/                  reference.jpg, prior.npz, background.jpg, signal_main.png, layout.json (scene facts)
+scene/                  reference.jpg, prior.npz, signal_main.png, layout.json (scene facts)
 weights/                model weights + download.sh + FIRE_SMOKE.md
 tools/                  extract_all, dev_eval, build_prior, snapshots, publish_site_data, train_fire_smoke.sh
 labels/dev_labels.json  our own annotations of the sample videos (dev set)
@@ -66,7 +66,7 @@ website/                FastAPI demo server + static site (Dockerfile for a Hugg
 ```bash
 python tools/make_reference.py samples/C3897.MP4 --at 75            # scene/reference.jpg (registration anchor)
 python tools/extract_all.py --videos samples --cache cache          # GPU pass, cached
-python tools/build_prior.py --cache cache                           # scene/prior.npz + background.jpg
+python tools/build_prior.py --cache cache                           # scene/prior.npz
 python tools/calibrate_risk.py --cache cache                        # Part B calibration check (CAL_MID)
 python tools/dev_eval.py --cache cache --gt labels/dev_labels.json  # rules + official metric
 python run_submission.py --videos samples --out predictions_samples.json --team AMITY-Tigers
@@ -75,8 +75,8 @@ pytest -q tests website/server/tests
 ```
 
 Every file in `scene/` except the hand-drawn `layout.json` is **derived from the organisers'
-sample videos** by the tools above: `reference.jpg` is one working-resolution frame,
-`background.jpg` the median of sampled frames, `prior.npz` statistics of tracked vehicles.
+sample videos** by the tools above: `reference.jpg` is one working-resolution frame and
+`prior.npz` statistics of tracked vehicles.
 They ship in the repository because the pipeline needs them at run time (no network).
 Rebuilding `prior.npz` on another OS/CPU can differ by a few cell counts (floating-point
 differences in image registration); this does not change the detected events on the samples.
@@ -146,11 +146,15 @@ up to fp16 noise in detector scores.
 |---|---|---|
 | YOLO11m / YOLO11s COCO weights (Ultralytics) | road-user detection | AGPL-3.0 |
 | COCO 2017 (via the pretrained weights) | detector pre-training | CC BY 4.0 |
-| Fire/smoke dataset — see `weights/FIRE_SMOKE.md` | fire/smoke fine-tuning | see file |
+| D-Fire (Gaia; de Venâncio et al., 2022), pinned HF mirror — details in `weights/FIRE_SMOKE.md` | fire/smoke fine-tuning | CC0 1.0 |
 | Organisers' sample videos | dev labels, scene prior | hackathon use only |
 
 Open-source code reused: Ultralytics (AGPL-3.0). The tracker follows the ByteTrack paper
 (Zhang et al., ECCV 2022) and is implemented from scratch.
+
+## Licence
+
+AGPL-3.0 (see `LICENSE`), as required by the Ultralytics code and weights the pipeline builds on.
 
 ## Team — AMITY-Tigers
 

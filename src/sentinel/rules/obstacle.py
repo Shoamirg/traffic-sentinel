@@ -7,16 +7,22 @@ Two sources:
    long-term background, on the carriageway, and not explained by any tracked
    road user, is a new static object. Start = it appears, end = it is gone.
 
-The long-term background is the median of the whole video, or the stored
-empty-road reference (scene/background.jpg) when present (so an obstacle that
-is there for the whole video is still found).
+The long-term background is the median of the video itself. A stored
+"empty road" image does not work for this camera: the samples span daylight to
+dusk (mean luma 94 vs 43), and shadows, markings and islands differ locally in
+ways global normalisation cannot remove - a stored background flagged a dusk
+video's whole road as a static change for its entire length. An object present
+for the entire video is indistinguishable from the scene and is not reported.
+Moments whose mean brightness is more than LIGHT_CHANGE_MAX away from the
+video's typical level (a cloud, auto-exposure: C3905 jumps from luma 37 to 51
+for a minute) are not judged, since every painted island and shadow edge
+changes then.
 """
 from __future__ import annotations
 
 import cv2
 import numpy as np
 
-from .. import config
 from ..segments import Event, runs
 from . import Context
 
@@ -26,6 +32,7 @@ MIN_BLOB_FRAC = 0.0006     # of the thumbnail area
 MAX_BLOB_FRAC = 0.05       # bigger changes are lighting/shadows, not objects
 MIN_DURATION = 5.0
 ANIMAL_MIN_SEC = 1.0
+LIGHT_CHANGE_MAX = 0.15     # relative mean-brightness change beyond which static change is not judged
 
 
 def _norm(gray: np.ndarray) -> np.ndarray:
@@ -35,15 +42,6 @@ def _norm(gray: np.ndarray) -> np.ndarray:
 
 
 def _reference(ctx: Context) -> np.ndarray:
-    path = config.SCENE_DIR / "background.jpg"
-    h, w = ctx.thumbs.shape[1:3]
-    if path.exists():
-        img = cv2.imread(str(path), cv2.IMREAD_GRAYSCALE)
-        if img is not None:
-            fw, fh = ctx.tracks.frame_size
-            img = cv2.warpAffine(cv2.resize(img, (fw, fh)), ctx.transform.astype(np.float32), (fw, fh),
-                                 borderMode=cv2.BORDER_REPLICATE)
-            return _norm(cv2.resize(img, (w, h), interpolation=cv2.INTER_AREA))
     grays = np.stack([cv2.cvtColor(t, cv2.COLOR_BGR2GRAY) for t in ctx.thumbs])
     return _norm(np.median(grays, axis=0))
 
@@ -75,10 +73,14 @@ def _static_change(ctx: Context) -> list[Event]:
     ref = _reference(ctx)
     road = _road_mask(ctx, shape)
     grays = np.stack([cv2.cvtColor(t, cv2.COLOR_BGR2GRAY) for t in ctx.thumbs])
+    luma = grays.reshape(len(grays), -1).mean(axis=1)
+    typical = float(np.median(luma))
     k = int(SHORT_SEC)
     area = shape[0] * shape[1]
     flags = np.zeros(len(grays), bool)
     for i in range(k, len(grays)):
+        if abs(float(luma[i - k:i + 1].mean()) - typical) > LIGHT_CHANGE_MAX * typical:
+            continue
         short = _norm(np.median(grays[i - k:i + 1], axis=0))
         diff = (np.abs(short - ref) > DIFF_THR) & road & ~_user_mask(ctx, ctx.thumb_times[i], shape)
         diff = cv2.morphologyEx(diff.astype(np.uint8), cv2.MORPH_OPEN, np.ones((3, 3), np.uint8))

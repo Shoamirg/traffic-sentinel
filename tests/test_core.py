@@ -169,7 +169,7 @@ def test_shipped_scene_assets_exist():
     # the pipeline registers each video against these and loads the learned prior; a clone without them
     # silently falls back to a much weaker scene model
     from sentinel import config
-    for name in ("layout.json", "prior.npz", "reference.jpg", "background.jpg"):
+    for name in ("layout.json", "prior.npz", "reference.jpg", "signal_main.png"):
         assert (config.SCENE_DIR / name).is_file(), name
 
 

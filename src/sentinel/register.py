@@ -2,10 +2,10 @@
 
 The camera is fixed but was re-mounted between recording days (samples differ
 by up to ~40 px). Everything we hand-draw (scene/layout.json) or learn offline
-(scene/prior.npz, scene/background.jpg) lives in the coordinates of
+(scene/prior.npz) lives in the coordinates of
 scene/reference.jpg. For each video we estimate a similarity transform
 reference -> video from ORB features (RANSAC), then move the layout, the prior
-grids and the background into the video's own pixel frame. Tracks stay native.
+grids into the video's own pixel frame. Tracks stay native.
 """
 from __future__ import annotations
 
