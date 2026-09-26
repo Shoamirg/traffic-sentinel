@@ -7,41 +7,46 @@
   "demo_page": "TODO: https://huggingface.co/spaces/<user>/traffic-sentinel",
   "members": [
     {
-      "name": "Shoamir Shorustamov",
-      "role": "Team captain · pipeline & submission",
+      "name": "Shokiriy Zohirjon Moxirjon o'g'li",
+      "role": "CEO · Frontend Developer",
+      "org": "Amity University in Tashkent · BTech CSE",
+      "photo": "media/team_zohirjon.jpg",
       "did": [
-        "Detection and tracking pipeline (YOLO11 + ByteTrack-style tracker) and the 14 event rules",
-        "Part B accident-risk model (closest-approach conflicts, calibrated on the samples)",
-        "Time-budget governor and runtime work: reference-frame decoding, x86/T4 testing",
-        "Final submission package, reproducibility and README"
+        "Team lead and coordination of the submission",
+        "Website frontend: sections, interactive event timelines, risk curves, annotated video player",
+        "Report page and presentation of the results"
+      ],
+      "github": "",
+      "linkedin": "",
+      "portfolio": "",
+      "projects": []
+    },
+    {
+      "name": "Qodirov Afzal Alijon o'g'li",
+      "role": "Backend Developer",
+      "org": "Amity University in Tashkent · BTech CSE",
+      "photo": "media/team_afzal.jpg",
+      "did": [
+        "Live-demo backend: upload API, job queue and progress reporting (FastAPI)",
+        "Demo deployment (Docker, CPU settings)",
+        "Dev-set labels checking and evaluation with the official metric"
+      ],
+      "github": "",
+      "linkedin": "",
+      "portfolio": "",
+      "projects": []
+    },
+    {
+      "name": "Shoamir Shorustamov Shoakbar o'g'li",
+      "role": "AI / ML Engineer",
+      "org": "Amity University in Tashkent · BTech CSE",
+      "photo": "media/team_shoamir.jpg",
+      "did": [
+        "Detection and tracking pipeline (YOLO11 + ByteTrack-style tracker) and the event rules",
+        "Part B accident-risk model and the time-budget governor",
+        "Fire/smoke detector fine-tuning (D-Fire), x86/T4 testing, reproducible submission"
       ],
       "github": "https://github.com/Shoamirg",
-      "linkedin": "",
-      "portfolio": "",
-      "projects": []
-    },
-    {
-      "name": "Afzal Qodirov",
-      "role": "Data & evaluation",
-      "did": [
-        "EDA of the four sample videos",
-        "Dev-set labels of the samples and their checking (labels/CHECKLIST.md)",
-        "Dev-set evaluation with the official metric and error analysis"
-      ],
-      "github": "",
-      "linkedin": "",
-      "portfolio": "",
-      "projects": []
-    },
-    {
-      "name": "Zohirjon Shokiriy",
-      "role": "Website & live demo",
-      "did": [
-        "Team website and live-demo deployment",
-        "Visualisations: event timelines, risk curves, annotated videos",
-        "Report page"
-      ],
-      "github": "",
       "linkedin": "",
       "portfolio": "",
       "projects": []
