@@ -16,10 +16,14 @@ sys.path.insert(0, str(Path(__file__).resolve().parent / "src"))
 from sentinel.pipeline import detect_video  # noqa: E402
 from sentinel.risk import CausalRisk  # noqa: E402
 
+# Score A averages F1 over every class in the ground truth OR in our predictions, so a class we predict
+# badly costs score even when it never occurs. Removed after scoring every rule on our dev labels of the
+# samples (labels/dev_labels.json): near_miss 0 TP / 14 FP, illegal_u_turn 0/7, red_light 0/1,
+# road_obstacle 0/1, stopped_vehicle 1/12 (queued cars). Their rules stay in src/ (and near_miss feeds
+# nothing else); classes that never fired on the samples are kept, as they cannot cost precision there.
 CLASSES: list[str] = [
-    "accident", "near_miss", "red_light", "wrong_way", "illegal_u_turn",
-    "stopped_vehicle", "jaywalking", "failure_to_yield", "illegal_turn",
-    "solid_line_crossing", "stop_line", "congestion", "road_obstacle", "fire_smoke",
+    "accident", "wrong_way", "jaywalking", "failure_to_yield", "illegal_turn",
+    "solid_line_crossing", "stop_line", "congestion", "fire_smoke",
 ]
 
 RISK_HORIZON_SEC = 5.0

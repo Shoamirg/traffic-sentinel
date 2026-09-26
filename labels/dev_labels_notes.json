@@ -1,0 +1,868 @@
+{
+ "status": "DRAFT - drafted from rendered frames, awaiting human confirmation",
+ "videos": {
+  "C3896.MP4": {
+   "notes": [
+    {
+     "event": [
+      53.5,
+      55.5,
+      "failure_to_yield"
+     ],
+     "confidence": "high",
+     "evidence": "Black SUV crosses lower part of foreground yellow zebra (slip lane, right->left) ~1 m in front of a pedestrian walking on the zebra (53.6-55.5)",
+     "image": "C:/Users/User/AppData/Local/Temp/claude/C--Users-User-Desktop-wiut-hackathon/a453d46f-c604-491d-8491-24e9d9fa8773/scratchpad/labels/C3896/fty53b.jpg",
+     "model": "missed"
+    },
+    {
+     "event": [
+      77.0,
+      81.0,
+      "failure_to_yield"
+     ],
+     "confidence": "low",
+     "evidence": "Black sedans then white SUV from the median-side lane of the top-left approach drive over the top crosswalk while 3 pedestrians are on its left part (several lanes away, walking toward the cars' path); may be a turn-arrow phase",
+     "image": "C:/Users/User/AppData/Local/Temp/claude/C--Users-User-Desktop-wiut-hackathon/a453d46f-c604-491d-8491-24e9d9fa8773/scratchpad/labels/C3896/fty78.jpg",
+     "model": "missed"
+    },
+    {
+     "event": [
+      104.5,
+      132.0,
+      "jaywalking"
+     ],
+     "confidence": "medium",
+     "evidence": "Pedestrian steps off the bus stop onto the far carriageway (~105), walks diagonally across/along the lanes far from the crosswalk, reaches the kerb near the crossing waiting group ~132 (end is approximate)",
+     "image": "C:/Users/User/AppData/Local/Temp/claude/C--Users-User-Desktop-wiut-hackathon/a453d46f-c604-491d-8491-24e9d9fa8773/scratchpad/labels/C3896/jay.jpg",
+     "model": "predicted"
+    },
+    {
+     "event": [
+      109.5,
+      113.0,
+      "failure_to_yield"
+     ],
+     "confidence": "medium",
+     "evidence": "Two white cars turning into the bottom-left leg drive over the upper end of the foreground zebra while a courier pushing a bike and a pedestrian are on the zebra (a few metres away)",
+     "image": "C:/Users/User/AppData/Local/Temp/claude/C--Users-User-Desktop-wiut-hackathon/a453d46f-c604-491d-8491-24e9d9fa8773/scratchpad/labels/C3896/fty110.jpg",
+     "model": "predicted"
+    },
+    {
+     "event": [
+      179.5,
+      181.0,
+      "failure_to_yield"
+     ],
+     "confidence": "high",
+     "evidence": "White car crosses the lower part of the foreground zebra right in front of two pedestrians on it (180.0)",
+     "image": "C:/Users/User/AppData/Local/Temp/claude/C--Users-User-Desktop-wiut-hackathon/a453d46f-c604-491d-8491-24e9d9fa8773/scratchpad/labels/C3896/fty180.jpg",
+     "model": "missed"
+    },
+    {
+     "event": [
+      245.5,
+      247.5,
+      "failure_to_yield"
+     ],
+     "confidence": "medium",
+     "evidence": "Grey sedan drives across lower part of foreground zebra while two pedestrians are on the zebra",
+     "image": "C:/Users/User/AppData/Local/Temp/claude/C--Users-User-Desktop-wiut-hackathon/a453d46f-c604-491d-8491-24e9d9fa8773/scratchpad/labels/C3896/fty245.jpg",
+     "model": "missed"
+    },
+    {
+     "event": [
+      286.5,
+      290.5,
+      "failure_to_yield"
+     ],
+     "confidence": "medium",
+     "evidence": "White hatchback (286.5-288.5) then grey SUV (288.5-290.5) drive through the foreground zebra while a woman in red stands on it",
+     "image": "C:/Users/User/AppData/Local/Temp/claude/C--Users-User-Desktop-wiut-hackathon/a453d46f-c604-491d-8491-24e9d9fa8773/scratchpad/labels/C3896/fty287.jpg",
+     "model": "missed"
+    },
+    {
+     "event": [
+      320.0,
+      321.5,
+      "failure_to_yield"
+     ],
+     "confidence": "medium",
+     "evidence": "Grey SUV drives across lower part of foreground zebra while the woman in red stands on it",
+     "image": "C:/Users/User/AppData/Local/Temp/claude/C--Users-User-Desktop-wiut-hackathon/a453d46f-c604-491d-8491-24e9d9fa8773/scratchpad/labels/C3896/fty320.jpg",
+     "model": "missed"
+    },
+    {
+     "event": [
+      297.5,
+      328.0,
+      "stop_line"
+     ],
+     "confidence": "medium",
+     "evidence": "White car in median-side lane of top-left approach stops past the stop line, front at the crosswalk, ahead of the queue; signal head shows red, pedestrians cross in front (309); signal green ~328, moves 329",
+     "image": "C:/Users/User/AppData/Local/Temp/claude/C--Users-User-Desktop-wiut-hackathon/a453d46f-c604-491d-8491-24e9d9fa8773/scratchpad/labels/C3896/stopline.jpg",
+     "model": "predicted"
+    }
+   ],
+   "rejected_candidates": [
+    {
+     "event": [
+      126.6,
+      128.1,
+      "near_miss"
+     ],
+     "why": "normal traffic on far carriageway; no braking/swerve visible"
+    },
+    {
+     "event": [
+      146.8,
+      147.3,
+      "near_miss"
+     ],
+     "why": "cars far away behind bus; ordinary flow"
+    },
+    {
+     "event": [
+      203.9,
+      208.7,
+      "near_miss"
+     ],
+     "why": "mixer truck and cars moving normally through junction; no evasive action"
+    },
+    {
+     "event": [
+      5.2,
+      22.9,
+      "stopped_vehicle"
+     ],
+     "why": "black SUV waiting mid-junction in the regular waiting position (signal-controlled), under 20 s, moves with the flow"
+    },
+    {
+     "event": [
+      38.7,
+      108.1,
+      "stopped_vehicle"
+     ],
+     "why": "merged multi-track; vehicles queued or waiting in junction for signal phase (80-107 group waits then leaves)"
+    },
+    {
+     "event": [
+      125.9,
+      340.3,
+      "stopped_vehicle"
+     ],
+     "why": "merged queued vehicles; incl. 2 cars waiting mid-junction 297-329 that leave with the signal cycle - queued, not breakdown"
+    },
+    {
+     "event": [
+      41.8,
+      61.3,
+      "illegal_u_turn"
+     ],
+     "why": "Yandex taxi does appear to U-turn around the median (near carriageway to far one), but no prohibiting sign/marking visible - legality unjudgeable"
+    },
+    {
+     "event": [
+      134.0,
+      158.9,
+      "illegal_u_turn"
+     ],
+     "why": "black SUV makes a normal through/turn movement, yields at the crosswalk 147-155; not a U-turn"
+    },
+    {
+     "event": [
+      78.8,
+      99.0,
+      "red_light"
+     ],
+     "why": "white SUV from median-side lane enters while other lanes wait; could be a turn-arrow phase, signal for that lane not visible (logged as low-confidence failure_to_yield 77-81 instead)"
+    },
+    {
+     "event": [
+      46.1,
+      49.4,
+      "failure_to_yield"
+     ],
+     "why": "delivery moped rides along the zebra with pedestrians; no vehicle drives through the crossing"
+    }
+   ]
+  },
+  "C3897.MP4": {
+   "notes": [
+    {
+     "event": [
+      0.0,
+      26.5,
+      "stopped_vehicle"
+     ],
+     "confidence": "low",
+     "evidence": "Black SUV stationary mid-junction (below upper crossing, ~x840,y495 @1280) from video start while its approach is red and traffic later passes it; moves ~26.5s. Could be judged 'waiting for signal' -> reject if so",
+     "image": "C:/Users/User/AppData/Local/Temp/claude/C--Users-User-Desktop-wiut-hackathon/a453d46f-c604-491d-8491-24e9d9fa8773/scratchpad/labels/C3897/suv_a.jpg",
+     "model": "missed (model's 4.5-26.3 box is a queued car)"
+    },
+    {
+     "event": [
+      209.5,
+      248.5,
+      "stopped_vehicle"
+     ],
+     "confidence": "low",
+     "evidence": "Dark sedan stopped just past the upper zebra inside the junction (~x430,y345 @960 frame) for ~39s during red, queue behind at stop line; leaves when queue releases. Alternative reading: stop_line/queued at signal",
+     "image": "C:/Users/User/AppData/Local/Temp/claude/C--Users-User-Desktop-wiut-hackathon/a453d46f-c604-491d-8491-24e9d9fa8773/scratchpad/labels/C3897/car2.jpg",
+     "model": "missed"
+    },
+    {
+     "event": [
+      4.0,
+      21.5,
+      "jaywalking"
+     ],
+     "confidence": "high",
+     "evidence": "Man leaves upper zebra at ~4s, walks on asphalt to pink island and on; then crowd (~12 people) leaves zebra ~11s and walks diagonally across road to lower crossing, reached ~21.5s",
+     "image": "C:/Users/User/AppData/Local/Temp/claude/C--Users-User-Desktop-wiut-hackathon/a453d46f-c604-491d-8491-24e9d9fa8773/scratchpad/labels/C3897/jw_a.jpg",
+     "model": "predicted (3.2-6.2 + 10.6-18.2)"
+    },
+    {
+     "event": [
+      79.0,
+      89.5,
+      "jaywalking"
+     ],
+     "confidence": "high",
+     "evidence": "Group of 5 leaves upper zebra ~79s and cuts diagonally across carriageway to the pink island, arriving ~89s",
+     "image": "C:/Users/User/AppData/Local/Temp/claude/C--Users-User-Desktop-wiut-hackathon/a453d46f-c604-491d-8491-24e9d9fa8773/scratchpad/labels/C3897/jw_b.jpg",
+     "model": "predicted"
+    },
+    {
+     "event": [
+      143.0,
+      157.5,
+      "jaywalking"
+     ],
+     "confidence": "medium",
+     "evidence": "Upper-right leg: woman steps off far kerb ~143s and crosses lanes to the zebra (~151s); elderly person then crosses same lanes 152-157s outside the crossing",
+     "image": "C:/Users/User/AppData/Local/Temp/claude/C--Users-User-Desktop-wiut-hackathon/a453d46f-c604-491d-8491-24e9d9fa8773/scratchpad/labels/C3897/jw_g.jpg",
+     "model": "predicted (150.5-154.7)"
+    },
+    {
+     "event": [
+      295.5,
+      304.5,
+      "jaywalking"
+     ],
+     "confidence": "high",
+     "evidence": "Couple (orange/brown) leaves upper zebra ~295.5s, walks across road via island, reaches lower zebra ~304.5s",
+     "image": "C:/Users/User/AppData/Local/Temp/claude/C--Users-User-Desktop-wiut-hackathon/a453d46f-c604-491d-8491-24e9d9fa8773/scratchpad/labels/C3897/jw_c.jpg",
+     "model": "predicted (294.4-298.6)"
+    },
+    {
+     "event": [
+      307.0,
+      317.8,
+      "jaywalking"
+     ],
+     "confidence": "high",
+     "evidence": "Another group leaves upper zebra from ~307s and walks diagonally on the road toward the island; two still on the road at video end",
+     "image": "C:/Users/User/AppData/Local/Temp/claude/C--Users-User-Desktop-wiut-hackathon/a453d46f-c604-491d-8491-24e9d9fa8773/scratchpad/labels/C3897/jw_d.jpg",
+     "model": "missed"
+    },
+    {
+     "event": [
+      177.5,
+      179.5,
+      "failure_to_yield"
+     ],
+     "confidence": "high",
+     "evidence": "Black SUV turning right drives over the top of the lower diagonal zebra passing right beside a pedestrian who is on the crossing",
+     "image": "C:/Users/User/AppData/Local/Temp/claude/C--Users-User-Desktop-wiut-hackathon/a453d46f-c604-491d-8491-24e9d9fa8773/scratchpad/labels/C3897/fy_a.jpg",
+     "model": "predicted"
+    },
+    {
+     "event": [
+      180.8,
+      182.2,
+      "failure_to_yield"
+     ],
+     "confidence": "medium",
+     "evidence": "White sedan crosses top end of lower zebra while the same pedestrian is mid-crossing (a few metres away)",
+     "image": "C:/Users/User/AppData/Local/Temp/claude/C--Users-User-Desktop-wiut-hackathon/a453d46f-c604-491d-8491-24e9d9fa8773/scratchpad/labels/C3897/fy_b.jpg",
+     "model": "missed"
+    },
+    {
+     "event": [
+      182.5,
+      184.2,
+      "failure_to_yield"
+     ],
+     "confidence": "medium",
+     "evidence": "Grey sedan crosses top end of lower zebra while pedestrian still on it",
+     "image": "C:/Users/User/AppData/Local/Temp/claude/C--Users-User-Desktop-wiut-hackathon/a453d46f-c604-491d-8491-24e9d9fa8773/scratchpad/labels/C3897/fy_b.jpg",
+     "model": "predicted (182.3-183.1)"
+    },
+    {
+     "event": [
+      191.5,
+      194.8,
+      "failure_to_yield"
+     ],
+     "confidence": "medium",
+     "evidence": "Motorcyclist rides along/through the lower zebra among 3 pedestrians on it, exits frame bottom ~194.8",
+     "image": "C:/Users/User/AppData/Local/Temp/claude/C--Users-User-Desktop-wiut-hackathon/a453d46f-c604-491d-8491-24e9d9fa8773/scratchpad/labels/C3897/fy_d.jpg",
+     "model": "missed"
+    },
+    {
+     "event": [
+      214.0,
+      217.2,
+      "failure_to_yield"
+     ],
+     "confidence": "medium",
+     "evidence": "Black SUV then white taxi drive over the lower end of the lower zebra while two women are on the crossing 1-3 m away (merged, overlapping)",
+     "image": "C:/Users/User/AppData/Local/Temp/claude/C--Users-User-Desktop-wiut-hackathon/a453d46f-c604-491d-8491-24e9d9fa8773/scratchpad/labels/C3897/fy_c.jpg",
+     "model": "predicted (214.2-215.0)"
+    }
+   ],
+   "rejected_candidates": [
+    {
+     "event": [
+      15.8,
+      17.5,
+      "near_miss"
+     ],
+     "why": "normal far-lane traffic; overlapping boxes/ID swaps, no braking or swerve"
+    },
+    {
+     "event": [
+      111.2,
+      115.2,
+      "near_miss"
+     ],
+     "why": "distant far-road cars in normal flow"
+    },
+    {
+     "event": [
+      123.5,
+      124.0,
+      "near_miss"
+     ],
+     "why": "tracker ID swap between two cars in same lane, no evasive action"
+    },
+    {
+     "event": [
+      233.7,
+      235.0,
+      "near_miss"
+     ],
+     "why": "delivery scooter crosses road ahead of slow white car; no visible braking/swerve (checked nm_a.jpg)"
+    },
+    {
+     "event": [
+      243.9,
+      245.0,
+      "near_miss"
+     ],
+     "why": "far-lane traffic, normal"
+    },
+    {
+     "event": [
+      4.5,
+      26.3,
+      "stopped_vehicle"
+     ],
+     "why": "tracked car is in the signal queue at the stop line (queued at red)"
+    },
+    {
+     "event": [
+      35.4,
+      317.8,
+      "stopped_vehicle"
+     ],
+     "why": "merged fragments of moving/queued vehicles across whole video"
+    },
+    {
+     "event": [
+      105.6,
+      127.1,
+      "illegal_u_turn"
+     ],
+     "why": "real U-turn (from top-left approach back onto far road, waits near right island) but no visible prohibition; U-turns routine here - human to decide legality"
+    },
+    {
+     "event": [
+      129.0,
+      141.4,
+      "illegal_u_turn"
+     ],
+     "why": "same U-turn pattern (white car), legality not determinable"
+    },
+    {
+     "event": [
+      196.9,
+      217.5,
+      "illegal_u_turn"
+     ],
+     "why": "same U-turn pattern (dark car), legality not determinable"
+    },
+    {
+     "event": [
+      0.1,
+      19.9,
+      "stop_line"
+     ],
+     "why": "front-row car in queue sits at/just behind the stop line before the zebra; not clearly past it"
+    },
+    {
+     "event": [
+      61.7,
+      94.7,
+      "stop_line"
+     ],
+     "why": "moving red car/fragmented track, no stop past line"
+    },
+    {
+     "event": [
+      177.2,
+      180.4,
+      "jaywalking"
+     ],
+     "why": "tracked 'person' is a delivery motorcyclist riding in the lane"
+    },
+    {
+     "event": [
+      273.8,
+      276.5,
+      "jaywalking"
+     ],
+     "why": "tracked object is a scooter rider near far kerb/sidewalk, not a pedestrian on road"
+    },
+    {
+     "event": [
+      177.2,
+      187.3,
+      "road_obstacle"
+     ],
+     "why": "no object on carriageway; only moving traffic and a courier motorcycle"
+    }
+   ]
+  },
+  "C3902.MP4": {
+   "notes": [
+    {
+     "event": [
+      52.5,
+      55.5,
+      "failure_to_yield"
+     ],
+     "confidence": "medium",
+     "evidence": "Black sedan turning right from left queue waits 49-52s then drives over the lower-left zebra while a pedestrian stream is still on it (pedestrian ~1m from its front at 53s)",
+     "image": "C:/Users/User/AppData/Local/Temp/claude/C--Users-User-Desktop-wiut-hackathon/a453d46f-c604-491d-8491-24e9d9fa8773/scratchpad/labels/C3902/fty_48.jpg",
+     "model": "predicted"
+    },
+    {
+     "event": [
+      284.5,
+      290.5,
+      "failure_to_yield"
+     ],
+     "confidence": "high",
+     "evidence": "Two dark SUVs turning right cross the lower-left zebra back-to-back with pedestrians directly beside/in front (man in suit + girl at 285.5-286.5s; group at 288-289.5s); merged since contiguous",
+     "image": "C:/Users/User/AppData/Local/Temp/claude/C--Users-User-Desktop-wiut-hackathon/a453d46f-c604-491d-8491-24e9d9fa8773/scratchpad/labels/C3902/fty_281.jpg",
+     "model": "predicted"
+    },
+    {
+     "event": [
+      97.5,
+      117.5,
+      "stop_line"
+     ],
+     "confidence": "medium",
+     "evidence": "Orange delivery moped rides in from the left and stops between the stop line and the zebra ahead of the red-light queue; left signal head turns green ~117.5s, moped leaves at 118s",
+     "image": "C:/Users/User/AppData/Local/Temp/claude/C--Users-User-Desktop-wiut-hackathon/a453d46f-c604-491d-8491-24e9d9fa8773/scratchpad/labels/C3902/sl_93.jpg",
+     "model": "predicted"
+    },
+    {
+     "event": [
+      82.0,
+      95.0,
+      "jaywalking"
+     ],
+     "confidence": "high",
+     "evidence": "Group of 3 pedestrians leave the lower zebra/island and walk diagonally across the open junction to the right end of the horizontal zebra",
+     "image": "C:/Users/User/AppData/Local/Temp/claude/C--Users-User-Desktop-wiut-hackathon/a453d46f-c604-491d-8491-24e9d9fa8773/scratchpad/labels/C3902/C3902_00088.0.jpg",
+     "model": "predicted"
+    },
+    {
+     "event": [
+      181.0,
+      192.0,
+      "jaywalking"
+     ],
+     "confidence": "medium",
+     "evidence": "Several pedestrians step off the horizontal zebra and cut diagonally across the carriageway down to the pink islands/lower zebra",
+     "image": "C:/Users/User/AppData/Local/Temp/claude/C--Users-User-Desktop-wiut-hackathon/a453d46f-c604-491d-8491-24e9d9fa8773/scratchpad/labels/C3902/jw_180.jpg",
+     "model": "predicted"
+    },
+    {
+     "event": [
+      225.5,
+      232.5,
+      "jaywalking"
+     ],
+     "confidence": "medium",
+     "evidence": "Man in black walks from the right pink island across open carriageway up to the horizontal zebra (buses turning nearby)",
+     "image": "C:/Users/User/AppData/Local/Temp/claude/C--Users-User-Desktop-wiut-hackathon/a453d46f-c604-491d-8491-24e9d9fa8773/scratchpad/labels/C3902/jw_220.jpg",
+     "model": "missed"
+    },
+    {
+     "event": [
+      259.5,
+      269.0,
+      "jaywalking"
+     ],
+     "confidence": "high",
+     "evidence": "Three pedestrians leave the horizontal zebra and walk diagonally across the carriageway to the pink islands/lower zebra",
+     "image": "C:/Users/User/AppData/Local/Temp/claude/C--Users-User-Desktop-wiut-hackathon/a453d46f-c604-491d-8491-24e9d9fa8773/scratchpad/labels/C3902/jw_256.jpg",
+     "model": "predicted"
+    },
+    {
+     "event": [
+      274.5,
+      279.5,
+      "jaywalking"
+     ],
+     "confidence": "low",
+     "evidence": "Man in white shirt walks from horizontal zebra diagonally down across the road to the top pink island; short",
+     "image": "C:/Users/User/AppData/Local/Temp/claude/C--Users-User-Desktop-wiut-hackathon/a453d46f-c604-491d-8491-24e9d9fa8773/scratchpad/labels/C3902/jw_272.jpg",
+     "model": "missed"
+    }
+   ],
+   "rejected_candidates": [
+    {
+     "event": [
+      25.9,
+      40.6,
+      "failure_to_yield"
+     ],
+     "why": "Orange moped rides onto the lower zebra and moves along it together with pedestrians (acting as a pedestrian), no vehicle forcing through a crossing"
+    },
+    {
+     "event": [
+      292.6,
+      306.1,
+      "failure_to_yield"
+     ],
+     "why": "Gray SUV waited at the zebra 291-304s and only crossed after pedestrians had cleared - it yielded"
+    },
+    {
+     "event": [
+      17.9,
+      18.9,
+      "near_miss"
+     ],
+     "why": "Cyclist and pedestrian on the far-right sidewalk, no evasive action"
+    },
+    {
+     "event": [
+      80.8,
+      81.8,
+      "near_miss"
+     ],
+     "why": "Distant cars in normal flow on the far road"
+    },
+    {
+     "event": [
+      151.0,
+      152.1,
+      "near_miss"
+     ],
+     "why": "Distant cars in normal flow; box/track overlap only"
+    },
+    {
+     "event": [
+      279.0,
+      279.9,
+      "near_miss"
+     ],
+     "why": "Distant cars in dense but normal traffic"
+    },
+    {
+     "event": [
+      286.6,
+      287.6,
+      "near_miss"
+     ],
+     "why": "Distant cars in dense but normal traffic"
+    },
+    {
+     "event": [
+      2.9,
+      40.9,
+      "stopped_vehicle"
+     ],
+     "why": "White van queued in the left approach at a red signal"
+    },
+    {
+     "event": [
+      52.5,
+      123.0,
+      "stopped_vehicle"
+     ],
+     "why": "Articulated bus crawling in slow exit traffic at bottom-right (moves steadily 60-84s) plus queued cars; not stationary >=10s"
+    },
+    {
+     "event": [
+      135.8,
+      162.1,
+      "stopped_vehicle"
+     ],
+     "why": "Cars queued on the right approach waiting for their signal"
+    },
+    {
+     "event": [
+      208.1,
+      242.8,
+      "stopped_vehicle"
+     ],
+     "why": "Buses briefly held (~8s) inside the junction behind other turning buses; queue, not a stopped vehicle"
+    },
+    {
+     "event": [
+      258.7,
+      278.4,
+      "stopped_vehicle"
+     ],
+     "why": "Vehicles queued at signals (left and right approaches)"
+    },
+    {
+     "event": [
+      296.2,
+      311.1,
+      "stopped_vehicle"
+     ],
+     "why": "Cars in dense slow-moving traffic"
+    },
+    {
+     "event": [
+      288.6,
+      307.8,
+      "illegal_u_turn"
+     ],
+     "why": "Bus making a normal right turn; track ID switch, no U-turn"
+    },
+    {
+     "event": [
+      7.3,
+      37.1,
+      "stop_line"
+     ],
+     "why": "Front-row car of the left queue is behind the stop line"
+    },
+    {
+     "event": [
+      253.7,
+      277.1,
+      "stop_line"
+     ],
+     "why": "Front-row car of the left queue is behind the stop line"
+    },
+    {
+     "event": [
+      95.0,
+      146.7,
+      "jaywalking"
+     ],
+     "why": "Tail of model segment 85.4-146.7: after 95s pedestrians are on zebras or sidewalks (and 136-142s only short hops between island and zebra)"
+    },
+    {
+     "event": [
+      150.6,
+      181.0,
+      "jaywalking"
+     ],
+     "why": "Head of model segment 150.6-186.2: pedestrians on zebras/far sidewalk before 181s"
+    },
+    {
+     "event": [
+      60.0,
+      84.0,
+      "congestion"
+     ],
+     "why": "Recall-pass idea: bunching at the bottom-right exit around the bus, but traffic keeps moving; not a standstill across all lanes"
+    },
+    {
+     "event": [
+      84.0,
+      119.0,
+      "congestion"
+     ],
+     "why": "Recall-pass idea: long left-approach queue is a normal red-light queue that clears at green (~118s)"
+    }
+   ]
+  },
+  "C3905.MP4": {
+   "notes": [
+    {
+     "event": [
+      14.0,
+      15.0,
+      "failure_to_yield"
+     ],
+     "confidence": "low",
+     "evidence": "white hatchback drives across the lower (bottom-left diagonal) crosswalk while a cyclist and 3 pedestrians are on its upper end ~near curb",
+     "image": "C:/Users/User/AppData/Local/Temp/claude/C--Users-User-Desktop-wiut-hackathon/a453d46f-c604-491d-8491-24e9d9fa8773/scratchpad/labels/C3905/fty_a.jpg",
+     "model": "predicted"
+    },
+    {
+     "event": [
+      18.3,
+      19.3,
+      "failure_to_yield"
+     ],
+     "confidence": "medium",
+     "evidence": "dark sedan crosses lower crosswalk while group of 3 pedestrians + man with bike stand on the zebra between the islands",
+     "image": "C:/Users/User/AppData/Local/Temp/claude/C--Users-User-Desktop-wiut-hackathon/a453d46f-c604-491d-8491-24e9d9fa8773/scratchpad/labels/C3905/fty_a.jpg",
+     "model": "predicted"
+    },
+    {
+     "event": [
+      28.8,
+      29.8,
+      "failure_to_yield"
+     ],
+     "confidence": "medium",
+     "evidence": "white sedan passes lower crosswalk right next to the group of 4 pedestrians standing on the zebra",
+     "image": "C:/Users/User/AppData/Local/Temp/claude/C--Users-User-Desktop-wiut-hackathon/a453d46f-c604-491d-8491-24e9d9fa8773/scratchpad/labels/C3905/fty_a.jpg",
+     "model": "predicted"
+    },
+    {
+     "event": [
+      39.0,
+      41.5,
+      "failure_to_yield"
+     ],
+     "confidence": "high",
+     "evidence": "white Cobalt drives through lower crosswalk between a man walking a bicycle and 3 pedestrians, all on the zebra",
+     "image": "C:/Users/User/AppData/Local/Temp/claude/C--Users-User-Desktop-wiut-hackathon/a453d46f-c604-491d-8491-24e9d9fa8773/scratchpad/labels/C3905/crop_fty.jpg",
+     "model": "predicted"
+    },
+    {
+     "event": [
+      42.5,
+      47.5,
+      "failure_to_yield"
+     ],
+     "confidence": "medium",
+     "evidence": "white sedan then black SUV cross upper part of lower crosswalk while a pedestrian and cyclist are mid-crossing on it",
+     "image": "C:/Users/User/AppData/Local/Temp/claude/C--Users-User-Desktop-wiut-hackathon/a453d46f-c604-491d-8491-24e9d9fa8773/scratchpad/labels/C3905/fty_c.jpg",
+     "model": "predicted"
+    },
+    {
+     "event": [
+      104.5,
+      106.5,
+      "failure_to_yield"
+     ],
+     "confidence": "medium",
+     "evidence": "black sedan crosses lower crosswalk while pedestrians step onto its upper end",
+     "image": "C:/Users/User/AppData/Local/Temp/claude/C--Users-User-Desktop-wiut-hackathon/a453d46f-c604-491d-8491-24e9d9fa8773/scratchpad/labels/C3905/fty_c.jpg",
+     "model": "missed"
+    },
+    {
+     "event": [
+      108.5,
+      112.0,
+      "failure_to_yield"
+     ],
+     "confidence": "high",
+     "evidence": "black sedan then white Nexia cross lower crosswalk while several pedestrians are walking on it (white car passes ~1 m from a pedestrian at 111 s)",
+     "image": "C:/Users/User/AppData/Local/Temp/claude/C--Users-User-Desktop-wiut-hackathon/a453d46f-c604-491d-8491-24e9d9fa8773/scratchpad/labels/C3905/fty_b.jpg",
+     "model": "missed"
+    },
+    {
+     "event": [
+      77.5,
+      114.5,
+      "stop_line"
+     ],
+     "confidence": "medium",
+     "evidence": "signal (head at ~770,255) amber 72.5, red 75.5, green 114.5; white van + black SUV creep forward and stop on the upper crosswalk at ~77.5 while red, pedestrians walk around them until green",
+     "image": "C:/Users/User/AppData/Local/Temp/claude/C--Users-User-Desktop-wiut-hackathon/a453d46f-c604-491d-8491-24e9d9fa8773/scratchpad/labels/C3905/crop_c.jpg",
+     "model": "predicted"
+    }
+   ],
+   "rejected_candidates": [
+    {
+     "event": [
+      18.1,
+      19.0,
+      "near_miss"
+     ],
+     "why": "two cars on the far carriageway moving normally; no braking/swerve visible"
+    },
+    {
+     "event": [
+      5.1,
+      28.8,
+      "stopped_vehicle"
+     ],
+     "why": "far top-left cars are a signal queue / parked cars off the carriageway, tracks jump between vehicles"
+    },
+    {
+     "event": [
+      56.3,
+      116.8,
+      "stopped_vehicle"
+     ],
+     "why": "semi-truck and cars stationary ~85-107 s are queued behind traffic in a gridlocked junction, not an isolated stopped vehicle; track IDs switch"
+    },
+    {
+     "event": [
+      62.1,
+      87.8,
+      "illegal_u_turn"
+     ],
+     "why": "track ID switches between different cars (and finally a pedestrian); no vehicle performs a U-turn"
+    },
+    {
+     "event": [
+      32.6,
+      35.2,
+      "jaywalking"
+     ],
+     "why": "yellow-vest courier is riding a bicycle between queued cars through the junction, not a pedestrian"
+    },
+    {
+     "event": [
+      9.6,
+      31.8,
+      "failure_to_yield"
+     ],
+     "why": "merged span too long; replaced by the individual crosswalk passes at 14,18.3,28.8 s"
+    },
+    {
+     "event": [
+      36.5,
+      45.8,
+      "failure_to_yield"
+     ],
+     "why": "span refined into 39.0-41.5 and 42.5-47.5"
+    },
+    {
+     "event": [
+      60.0,
+      62.0,
+      "failure_to_yield"
+     ],
+     "why": "white SUV crosses lower crosswalk but pedestrians are still on the sidewalk"
+    },
+    {
+     "event": [
+      100.0,
+      103.5,
+      "failure_to_yield"
+     ],
+     "why": "black SUV crosses lower crosswalk with no pedestrian on it (only on the sidewalk)"
+    }
+   ]
+  }
+ }
+}

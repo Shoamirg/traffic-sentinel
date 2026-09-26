@@ -164,4 +164,23 @@ AGPL-3.0 (see `LICENSE`), as required by the Ultralytics code and weights the pi
 
 ## Results
 
-_Filled in after the dev-set evaluation._
+Dev set: our own annotations of the four sample videos, `labels/dev_labels.json` (37 events: 21
+failure_to_yield, 11 jaywalking, 3 stop_line, 2 stopped_vehicle). **Status: draft** - drafted from
+rendered frames and awaiting a teammate's confirmation (`labels/CHECKLIST.md`, one row per event with
+an evidence image). The same labels were used to tune the rules below, so these are optimistic
+in-sample numbers, not a test-set estimate. Official metric (`evaluate.py`), F1 averaged over tIoU
+0.3 / 0.5 / 0.7:
+
+| class | before tuning | after | what changed |
+|---|---|---|---|
+| failure_to_yield | 0.08 | **0.49** | vehicle box instead of one ground point, moving passes only, one segment per pass, entry/exit lag 0.4 / 0.9 s |
+| jaywalking | 0.23 | **0.32** | one episode while people keep crossing (merge gap 5 s) |
+| stop_line | 0.60 | 0.60 | - |
+| stopped_vehicle | 0.13 | 0 (not predicted) | 1 TP / 12 FP, queued cars |
+| near_miss, illegal_u_turn, red_light, road_obstacle | 0 | not predicted | 0 TP / 23 FP in total |
+| **Score A** | **0.13** | **0.35** | |
+
+Score A averages over every class in the ground truth *or* the predictions, so the five classes
+above with (near-)zero precision were removed from `CLASSES` in `solution.py` (allowed by the task).
+Classes that never fired on the 1,100 s of samples (accident, wrong_way, congestion, fire_smoke,
+illegal_turn, solid_line_crossing) are kept. Part B is not scored on the samples (no accidents).

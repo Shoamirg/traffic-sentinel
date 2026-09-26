@@ -35,7 +35,9 @@ RULES: dict[str, Callable[[Context], list[Event]]] = {
 }
 
 # Per-class post-processing (seconds).
-MERGE_GAP = {"congestion": 5.0, "stopped_vehicle": 3.0, "jaywalking": 1.5}
+# jaywalking: one episode while people keep crossing (overlapping same-class events are one segment in the
+# annotations); failure_to_yield: one segment per vehicle pass. Both chosen on labels/dev_labels.json.
+MERGE_GAP = {"congestion": 5.0, "stopped_vehicle": 3.0, "jaywalking": 5.0, "failure_to_yield": 0.0}
 MIN_LEN = {"congestion": 75.0, "stopped_vehicle": 10.0}
 
 # Weight of the video's own tracks relative to the offline prior.
