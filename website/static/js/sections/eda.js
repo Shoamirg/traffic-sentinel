@@ -88,7 +88,7 @@ function videoPanel(v, charts) {
     const d = density(c);
     const dbox = h('div.card.chart-card', {}, h('h3', {}, 'Density'), h('p.muted.small', {}, 'All road users in frame - the signal the congestion rule builds on.'));
     grid.append(dbox);
-    charts.push(new LineChart(dbox, { height: 160, series: [{ name: 'road users', color: '#4fd8eb', xs: t, ys: d, fill: true }], formatX: (x) => fmtTime(x, 0), formatY: (y) => fmtNum(y, 0), ariaLabel: `Density over time for ${v.id}` }));
+    charts.push(new LineChart(dbox, { height: 160, series: [{ name: 'road users', color: '#f2c14e', xs: t, ys: d, fill: true }], formatX: (x) => fmtTime(x, 0), formatY: (y) => fmtNum(y, 0), ariaLabel: `Density over time for ${v.id}` }));
   } else {
     grid.append(h('p.muted', {}, 'No per-frame counts for this video.'));
   }

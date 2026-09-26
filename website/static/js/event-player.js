@@ -11,7 +11,7 @@ import { h, clear, classColor, classChip, cleanEvents, cleanPairs, fmtTime, fmtN
 import { LineChart } from './chart.js';
 
 const ALARM = 0.5;
-const RISK_GRADIENT = [[0, '#35d07f'], [0.25, '#35d07f'], [0.38, '#ffb020'], [0.5, '#ff4d4d'], [1, '#ff4d4d']];
+const RISK_GRADIENT = [[0, '#5fbf7f'], [0.25, '#5fbf7f'], [0.38, '#f0a13a'], [0.5, '#e5564b'], [1, '#e5564b']];
 let uid = 0;
 
 function riskLevel(v) {
@@ -166,9 +166,9 @@ export function createEventPlayer(host, data, opts = {}) {
     chart = new LineChart(riskHost, {
       height: 150, yMin: 0, yMax: 1, xMin: 0, xMax: duration,
       ariaLabel: `Risk curve. Peak ${fmtNum(peak)}; ${spans.length} alarm span(s). Use arrow keys to scrub.`,
-      series: [{ name: 'risk', xs: risk.map((r) => r[0]), ys: risk.map((r) => r[1]), color: '#ff4d4d', swatch: '#ff4d4d', gradient: RISK_GRADIENT, fill: true, fillAlpha: 0.22, width: 2 }],
+      series: [{ name: 'risk', xs: risk.map((r) => r[0]), ys: risk.map((r) => r[1]), color: '#e5564b', swatch: '#e5564b', gradient: RISK_GRADIENT, fill: true, fillAlpha: 0.22, width: 2 }],
       bands: spans.map(([s, e]) => ({ from: s, to: e, color: 'rgba(255,77,77,0.08)' })),
-      hlines: [{ y: ALARM, label: `ALARM ${ALARM}`, color: '#ff4d4d' }],
+      hlines: [{ y: ALARM, label: `ALARM ${ALARM}`, color: '#e5564b' }],
       formatX: (x) => fmtTime(x, 0),
       formatY: (y) => fmtNum(y, 2),
       onSeek: (x) => seek(x),

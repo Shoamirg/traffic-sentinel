@@ -4,7 +4,7 @@ WIUT Hackathon 2026, Computer Vision track. A fixed CCTV road camera is turned i
 (A) a list of traffic events `[start_sec, end_sec, label]` over 14 classes and
 (B) a causal, per-frame probability that an accident starts within 5 s.
 
-- Website + live demo: _link added at submission_
+- Website: https://shoamirg.github.io/traffic-sentinel/ (live demo backend: see `website/README.md`)
 - Predictions on the sample videos: [`predictions_samples.json`](predictions_samples.json)
 
 ## Run it

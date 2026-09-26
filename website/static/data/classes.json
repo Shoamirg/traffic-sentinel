@@ -2,77 +2,77 @@
  "classes": [
   {
    "id": "accident",
-   "color": "#ff3864",
+   "color": "#e5564b",
    "rule": "Contact between road users followed by an abrupt change of motion: boxes first overlap after a fast approach, then within a short window one party brakes violently or is deflected. Start = contact; end = both stop or leave the frame."
   },
   {
    "id": "near_miss",
-   "color": "#ff8fb1",
+   "color": "#e08a9a",
    "rule": "A pair on a collision course (short time-to-contact while closing fast) where one party brakes hard or swerves, and the boxes never overlap. Start = onset of evasive action; end = the pair is apart and opening.",
    "status": "Not output: 0 true / 14 false positives on our dev labels (tracker ID swaps, distant overlapping boxes)."
   },
   {
    "id": "red_light",
-   "color": "#b46bff",
+   "color": "#b9605a",
    "rule": "Vehicle crosses a stop line from the approach side after its signal has been red for a grace period (amber-to-red runs are not flagged). Signal state comes from the lamp ROI, thresholded per video with Otsu.",
    "status": "Not output: 0 / 1 - most signal heads face away from the camera."
   },
   {
    "id": "wrong_way",
-   "color": "#e04cd9",
+   "color": "#c27bd0",
    "rule": "Per observation, the learned direction field says what share of past traffic at that spot moved the same way. A sustained run of 'almost nobody drives like this here' on well-observed road is wrong-way driving."
   },
   {
    "id": "illegal_u_turn",
-   "color": "#ffab7a",
+   "color": "#9a90da",
    "rule": "The unwrapped heading of the moving part of a track rotates by about 180 degrees within a short window. Turns inside a u_turn_allowed polygon are legal and skipped.",
    "status": "Not output: 0 / 7 - ID switches, and U-turns here look routine with no visible prohibition."
   },
   {
    "id": "stopped_vehicle",
-   "color": "#3b9dff",
+   "color": "#8fa3b8",
    "rule": "Stationary on the carriageway for at least 10 s, chained across tracker ID switches by location, and not part of a queue in a learned queue zone.",
    "status": "Not output: 1 / 12 - signal queues and mid-junction waits look like stopped vehicles."
   },
   {
    "id": "jaywalking",
-   "color": "#2dd4bf",
+   "color": "#6fb8a2",
    "rule": "A pedestrian's ground point stays on observed road and outside every crossing polygon for a sustained time. Riders (person overlapping a two-wheeler or moving at vehicle speed) are rejected."
   },
   {
    "id": "failure_to_yield",
-   "color": "#a3e635",
+   "color": "#f2c14e",
    "rule": "A vehicle passes through a crossing polygon while a pedestrian's ground point is inside the same (slightly enlarged) crossing. Start = vehicle enters; end = it leaves."
   },
   {
    "id": "illegal_turn",
-   "color": "#e6c86e",
+   "color": "#7fa6d9",
    "rule": "A vehicle passes through a prohibited (from-zone, to-zone) pair from the layout. Start = leaves the from-zone; end = settled in the to-zone."
   },
   {
    "id": "solid_line_crossing",
-   "color": "#f2f27a",
+   "color": "#d9d3c4",
    "rule": "The vehicle's ground point changes side of a solid marking polyline. Start = the wheel crosses; end = the centre is half a box width past the line."
   },
   {
    "id": "stop_line",
-   "color": "#8e9bff",
+   "color": "#a9bd6e",
    "rule": "During red, a vehicle comes to a stop already past the stop line but not inside the junction. Start = it stops; end = the signal turns green."
   },
   {
    "id": "congestion",
-   "color": "#9aa7b8",
+   "color": "#b89c78",
    "rule": "Vehicles grouped by dominant lane direction (from the direction field, so stopped cars keep their lane). A direction is congested when enough vehicles are present and their median size-normalised speed is a crawl, sustained."
   },
   {
    "id": "road_obstacle",
-   "color": "#d6c3a5",
+   "color": "#cf9f5a",
    "rule": "Animals detected on the road, plus a background-change detector on 1 fps thumbnails: a short-term median that differs from the long-term background on the carriageway and is not explained by any tracked road user.",
    "status": "Not output: 0 / 1 on the samples; kept in the code with a per-video, lighting-robust background."
   },
   {
    "id": "fire_smoke",
-   "color": "#ff5a1f",
+   "color": "#e0793a",
    "rule": "Fire/smoke boxes from the fine-tuned detector above a confidence and size, required to persist across a sliding window so headlights, brake lights and glare do not trigger it."
   }
  ],
