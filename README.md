@@ -160,9 +160,11 @@ AGPL-3.0 (see `LICENSE`), as required by the Ultralytics code and weights the pi
 
 | Member | Role | Owns |
 |---|---|---|
-| Shoamir Shorustamov | Team captain · pipeline & submission | Detection and tracking pipeline (YOLO11 + ByteTrack-style tracker) and the 14 event rules; Part B accident-risk model (closest-approach conflicts, calibrated on the samples); Time-budget governor and runtime work: reference-frame decoding, x86/T4 testing; Final submission package, reproducibility and README |
-| Afzal Qodirov | Data & evaluation | EDA of the four sample videos; Dev-set labels of the samples and their checking (labels/CHECKLIST.md); Dev-set evaluation with the official metric and error analysis |
-| Zohirjon Shokiriy | Website & live demo | Team website and live-demo deployment; Visualisations: event timelines, risk curves, annotated videos; Report page |
+| Shokiriy Zohirjon Moxirjon o'g'li | CEO · Frontend Developer | Team lead and coordination of the submission; Website frontend: sections, interactive event timelines, risk curves, annotated video player; Report page and presentation of the results |
+| Qodirov Afzal Alijon o'g'li | Backend Developer | Live-demo backend: upload API, job queue and progress reporting (FastAPI); Demo deployment (Docker, CPU settings); Dev-set labels checking and evaluation with the official metric |
+| Shoamir Shorustamov Shoakbar o'g'li | AI / ML Engineer | Detection and tracking pipeline (YOLO11 + ByteTrack-style tracker) and the event rules; Part B accident-risk model and the time-budget governor; Fire/smoke detector fine-tuning (D-Fire), x86/T4 testing, reproducible submission |
+
+All three: Amity University in Tashkent, BTech CSE.
 
 ## Results
 

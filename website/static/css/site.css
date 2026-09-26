@@ -507,3 +507,5 @@ a.link-card:hover { border-color: var(--accent); transform: translateY(-2px); co
 
 /* dropped classes in the rulebook */
 .rule-status { margin-top: .5rem; font-size: .85em; opacity: .75; font-style: italic; }
+.member-org { margin: .15rem 0 0; font-size: .8em; opacity: .7; }
+.member .avatar { width: 72px; height: 72px; border-radius: 50%; }
