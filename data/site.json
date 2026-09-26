@@ -8,8 +8,13 @@
   "members": [
     {
       "name": "Shoamir Shorustamov",
-      "role": "Team captain",
-      "did": [],
+      "role": "Team captain · pipeline & submission",
+      "did": [
+        "Detection and tracking pipeline (YOLO11 + ByteTrack-style tracker) and the 14 event rules",
+        "Part B accident-risk model (closest-approach conflicts, calibrated on the samples)",
+        "Time-budget governor and runtime work: reference-frame decoding, x86/T4 testing",
+        "Final submission package, reproducibility and README"
+      ],
       "github": "https://github.com/Shoamirg",
       "linkedin": "",
       "portfolio": "",
@@ -17,8 +22,12 @@
     },
     {
       "name": "Afzal Qodirov",
-      "role": "Team member",
-      "did": [],
+      "role": "Data & evaluation",
+      "did": [
+        "EDA of the four sample videos",
+        "Dev-set labels of the samples and their checking (labels/CHECKLIST.md)",
+        "Dev-set evaluation with the official metric and error analysis"
+      ],
       "github": "",
       "linkedin": "",
       "portfolio": "",
@@ -26,8 +35,12 @@
     },
     {
       "name": "Zohirjon Shokiriy",
-      "role": "Team member",
-      "did": [],
+      "role": "Website & live demo",
+      "did": [
+        "Team website and live-demo deployment",
+        "Visualisations: event timelines, risk curves, annotated videos",
+        "Report page"
+      ],
       "github": "",
       "linkedin": "",
       "portfolio": "",

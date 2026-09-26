@@ -504,3 +504,6 @@ a.link-card:hover { border-color: var(--accent); transform: translateY(-2px); co
 @media (forced-colors: active) {
   .ep-ev, .chip, .heat-cell { forced-color-adjust: none; }
 }
+
+/* dropped classes in the rulebook */
+.rule-status { margin-top: .5rem; font-size: .85em; opacity: .75; font-style: italic; }

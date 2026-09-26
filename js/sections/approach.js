@@ -1,6 +1,6 @@
 // Approach: inline-SVG pipeline diagram (horizontal on desktop, vertical on
 // phones - same graph data, re-laid out) and the per-class rulebook.
-import { h, clear, classList, classColor, classRule, pretty } from '../util.js';
+import { h, clear, classList, classColor, classRule, classStatus, pretty } from '../util.js';
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
 const TAG = { learned: 'LEARNED', rule: 'RULES', manual: 'HAND-DRAWN', io: 'DATA' };
@@ -117,7 +117,8 @@ function renderRulebook(host) {
   for (const id of ids) {
     host.append(h('article.rule', { style: { '--c': classColor(id) } },
       h('h4', {}, h('span.chip-dot', { 'aria-hidden': 'true' }), pretty(id)),
-      h('p', {}, classRule(id))));
+      h('p', {}, classRule(id)),
+      classStatus(id) ? h('p.rule-status', {}, classStatus(id)) : null));
   }
 }
 

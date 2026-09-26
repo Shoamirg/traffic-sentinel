@@ -1,189 +1,118 @@
 {
- "placeholder": true,
- "dev_set": {
-  "score_a": 0.512,
-  "score_b": 0.438,
-  "model_score": 0.484,
-  "per_class": {
-   "accident": {
-    "f1@0.3": 0.68,
-    "f1@0.5": 0.6,
-    "f1@0.7": 0.45,
-    "tp": 3,
-    "fp": 2,
-    "fn": 2
-   },
-   "near_miss": {
-    "f1@0.3": 0.88,
-    "f1@0.5": 0.8,
-    "f1@0.7": 0.65,
-    "tp": 2,
-    "fp": 1,
-    "fn": 0
-   },
-   "red_light": {
-    "f1@0.3": 0.97,
-    "f1@0.5": 0.89,
-    "f1@0.7": 0.74,
-    "tp": 4,
-    "fp": 0,
-    "fn": 1
-   },
-   "wrong_way": {
-    "f1@0.3": 0.58,
-    "f1@0.5": 0.5,
-    "f1@0.7": 0.35,
-    "tp": 1,
-    "fp": 2,
-    "fn": 0
-   },
-   "illegal_u_turn": {
-    "f1@0.3": 0.83,
-    "f1@0.5": 0.75,
-    "f1@0.7": 0.6,
-    "tp": 6,
-    "fp": 2,
-    "fn": 2
-   },
-   "stopped_vehicle": {
-    "f1@0.3": 0.65,
-    "f1@0.5": 0.57,
-    "f1@0.7": 0.42,
-    "tp": 2,
-    "fp": 3,
-    "fn": 0
-   },
-   "jaywalking": {
-    "f1@0.3": 0.94,
-    "f1@0.5": 0.86,
-    "f1@0.7": 0.71,
-    "tp": 6,
-    "fp": 1,
-    "fn": 1
-   },
-   "failure_to_yield": {
-    "f1@0.3": 0.88,
-    "f1@0.5": 0.8,
-    "f1@0.7": 0.65,
-    "tp": 4,
-    "fp": 0,
-    "fn": 2
-   },
-   "illegal_turn": {
-    "f1@0.3": 0.83,
-    "f1@0.5": 0.75,
-    "f1@0.7": 0.6,
-    "tp": 6,
-    "fp": 3,
-    "fn": 1
-   },
-   "solid_line_crossing": {
-    "f1@0.3": 0.94,
-    "f1@0.5": 0.86,
-    "f1@0.7": 0.71,
-    "tp": 6,
-    "fp": 0,
-    "fn": 2
-   },
-   "stop_line": {
-    "f1@0.3": 0.08,
-    "f1@0.5": 0.0,
-    "f1@0.7": 0,
-    "tp": 0,
-    "fp": 1,
-    "fn": 0
-   },
-   "congestion": {
-    "f1@0.3": 1,
-    "f1@0.5": 1.0,
-    "f1@0.7": 0.85,
-    "tp": 5,
-    "fp": 0,
-    "fn": 0
-   },
-   "road_obstacle": {
-    "f1@0.3": 0.75,
-    "f1@0.5": 0.67,
-    "f1@0.7": 0.52,
-    "tp": 4,
-    "fp": 3,
-    "fn": 1
-   },
-   "fire_smoke": {
-    "f1@0.3": 0.91,
-    "f1@0.5": 0.83,
-    "f1@0.7": 0.68,
-    "tp": 5,
-    "fp": 2,
-    "fn": 0
-   }
-  }
- },
+ "note": "Dev set = our DRAFT labels of the four samples (labels/dev_labels.json), also used for tuning: in-sample numbers.",
  "ablations": [
   {
-   "name": "Full system",
-   "score_a": 0.512,
-   "notes": "PLACEHOLDER numbers"
+   "name": "Rules before dev tuning, all 14 classes (v1-safe)",
+   "score_a": 0.131,
+   "notes": "measured on the draft dev labels"
   },
   {
-   "name": "- learned direction field (hand layout only)",
-   "score_a": 0.441,
-   "notes": "wrong_way / u-turn recall drops"
+   "name": "Tuned failure_to_yield + jaywalking, all 14 classes",
+   "score_a": 0.192,
+   "notes": "zero-precision classes still predicted"
   },
   {
-   "name": "- queue zones",
-   "score_a": 0.47,
-   "notes": "queued cars flagged as stopped_vehicle"
-  },
-  {
-   "name": "- segment merging",
-   "score_a": 0.455,
-   "notes": "fragmented segments, more FP"
-  },
-  {
-   "name": "YOLO11n instead of YOLO11m",
-   "score_a": 0.462,
-   "notes": "3x faster, misses small pedestrians"
+   "name": "Tuned rules, final class set (v2-tuned)",
+   "score_a": 0.351,
+   "notes": "near_miss, illegal_u_turn, red_light, road_obstacle, stopped_vehicle not predicted"
   }
  ],
  "runtime": [
   {
-   "video": "sample_001",
-   "duration": 48.0,
-   "seconds": 61.0,
-   "x_realtime": 0.79
+   "video": "C3896",
+   "duration": 340.3,
+   "seconds": 193.3,
+   "x_realtime": 0.57
   },
   {
-   "video": "sample_002",
-   "duration": 60.0,
-   "seconds": 80.5,
-   "x_realtime": 0.75
+   "video": "C3897",
+   "duration": 317.8,
+   "seconds": 179.5,
+   "x_realtime": 0.56
   },
   {
-   "video": "sample_003",
-   "duration": 36.0,
-   "seconds": 44.2,
-   "x_realtime": 0.81
+   "video": "C3902",
+   "duration": 317.8,
+   "seconds": 184.4,
+   "x_realtime": 0.58
+  },
+  {
+   "video": "C3905",
+   "duration": 127.6,
+   "seconds": 67.3,
+   "x_realtime": 0.53
   }
  ],
+ "runtime_note": "Official harness, fresh clone, one GPU (GB10) + 20 ARM cores; seconds for Part A + Part B vs a budget of 3x duration.",
  "failures": [
   {
-   "title": "TODO - Glare read as fire",
-   "text": "PLACEHOLDER. Headlight bloom in rain triggered fire_smoke for several seconds.",
-   "video": "sample_003",
-   "t": 2.0
+   "title": "Courier on a motorbike read as a pedestrian",
+   "text": "A delivery rider in the lane was tracked as a 'person' and flagged as jaywalking (model 177.2-180.4 s).",
+   "video": "C3897",
+   "t": 177.5
   },
   {
-   "title": "TODO - ID switch during occlusion",
-   "text": "PLACEHOLDER. A bus hid a car; the tracker re-assigned its ID and the stopped_vehicle segment was split.",
-   "video": "sample_001",
-   "t": 14.0
+   "title": "Signal queue read as a stopped vehicle",
+   "text": "Cars waiting at red for 15-20 s were chained into a 'stopped vehicle'; this is why the class is no longer predicted.",
+   "video": "C3902",
+   "t": 5.0
   },
   {
-   "title": "TODO - Late accident onset",
-   "text": "PLACEHOLDER. Contact detected ~1 s late because boxes overlap in image space before the vehicles touch.",
-   "video": "sample_001",
-   "t": 24.8
+   "title": "Tracker ID switch read as a U-turn",
+   "text": "The track jumped between different cars and finally onto a pedestrian, which looked like a U-turn (model 62.1-87.8 s).",
+   "video": "C3905",
+   "t": 62.5
+  },
+  {
+   "title": "Moped on the zebra read as failure to yield",
+   "text": "A moped moving along the crossing with pedestrians is not a vehicle driving through it (model 25.9-40.6 s).",
+   "video": "C3902",
+   "t": 26.0
+  },
+  {
+   "title": "Distant overlapping boxes read as a near miss",
+   "text": "Two cars far away in normal flow overlapped in the image; no braking or swerving (model 243.9-245.0 s).",
+   "video": "C3897",
+   "t": 244.0
   }
- ]
+ ],
+ "dev_set": {
+  "score_a": 0.35131629887727445,
+  "score_b": null,
+  "model_score": 0.35131629887727445,
+  "per_class": {
+   "failure_to_yield": {
+    "f1@0.3": 0.5365853658536585,
+    "f1@0.5": 0.4878048780487805,
+    "f1@0.7": 0.4390243902439024,
+    "tp": 10,
+    "fp": 10,
+    "fn": 11
+   },
+   "jaywalking": {
+    "f1@0.3": 0.47619047619047616,
+    "f1@0.5": 0.28571428571428564,
+    "f1@0.7": 0.1904761904761905,
+    "tp": 3,
+    "fp": 7,
+    "fn": 8
+   },
+   "stop_line": {
+    "f1@0.3": 0.6,
+    "f1@0.5": 0.6,
+    "f1@0.7": 0.6,
+    "tp": 3,
+    "fp": 4,
+    "fn": 0
+   },
+   "stopped_vehicle": {
+    "f1@0.3": 0.0,
+    "f1@0.5": 0.0,
+    "f1@0.7": 0.0,
+    "tp": 0,
+    "fp": 0,
+    "fn": 2
+   }
+  }
+ }
 }
