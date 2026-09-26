@@ -19,7 +19,10 @@ ENV HOME=/home/user \
     PIP_NO_CACHE_DIR=1 \
     SENTINEL_WORKDIR=/tmp/sentinel_jobs \
     YOLO_CONFIG_DIR=/tmp/Ultralytics \
-    MPLCONFIGDIR=/tmp/matplotlib
+    MPLCONFIGDIR=/tmp/matplotlib     SENTINEL_WEIGHTS=weights/yolo11s.pt     SENTINEL_IMGSZ=960     SENTINEL_PART_A_FPS=5     SENTINEL_MAX_SECONDS=30     SENTINEL_MAX_MB=500
+# CPU demo settings: YOLO11s at 960 px, 5 fps. Measured on 2 CPU cores: 20 s of the organisers'
+# 4K 10-bit video in 154 s, so 30 s (about 500 MB at 140 Mbit/s) takes ~4-6 min. The submission
+# (run_submission.py) uses the full settings on GPU; these variables only affect this container.
 WORKDIR /home/user/app
 
 # Dependencies first (cached layer). CPU-only torch keeps the image ~1.5 GB smaller.

@@ -51,8 +51,8 @@ detects that `/api/health` is missing and shows an "offline" card that links to 
 |---|---|---|
 | `SENTINEL_FAKE` | unset | `1` = use `fake_analyze.py` |
 | `SENTINEL_FAKE_DELAY` | `1.0` | how slow the fake analysis is (0 = instant) |
-| `SENTINEL_MAX_MB` | `200` | upload limit |
-| `SENTINEL_MAX_SECONDS` | `120` | seconds of video passed to `analyze` as `max_seconds` |
+| `SENTINEL_MAX_MB` | `200` (Dockerfile: `500`) | upload limit |
+| `SENTINEL_MAX_SECONDS` | `120` (Dockerfile: `30`) | seconds of video passed to `analyze` as `max_seconds` |
 | `SENTINEL_JOB_TTL` | `3600` | jobs and their files are deleted after this many seconds |
 | `SENTINEL_WORKDIR` | temp dir | where uploads and outputs are written |
 | `SENTINEL_CORS_ORIGINS` | `*` | origins allowed to call the API (for a static site hosted elsewhere) |
