@@ -4,29 +4,14 @@
   "C3896.MP4": {
    "events": [
     [
-     5.17,
-     22.89,
-     "stopped_vehicle"
-    ],
-    [
-     38.71,
-     108.07,
-     "stopped_vehicle"
-    ],
-    [
-     41.81,
-     61.33,
-     "illegal_u_turn"
-    ],
-    [
-     46.11,
-     49.42,
+     45.11,
+     50.82,
      "failure_to_yield"
     ],
     [
-     78.76,
-     99.04,
-     "red_light"
+     53.32,
+     56.02,
+     "failure_to_yield"
     ],
     [
      108.88,
@@ -34,34 +19,14 @@
      "jaywalking"
     ],
     [
-     110.78,
-     115.18,
+     110.88,
+     116.18,
      "failure_to_yield"
     ],
     [
-     125.89,
-     340.34,
-     "stopped_vehicle"
-    ],
-    [
-     126.59,
-     128.09,
-     "near_miss"
-    ],
-    [
-     134.0,
-     158.92,
-     "illegal_u_turn"
-    ],
-    [
-     146.81,
-     147.31,
-     "near_miss"
-    ],
-    [
-     203.87,
-     208.68,
-     "near_miss"
+     223.69,
+     224.49,
+     "failure_to_yield"
     ],
     [
      297.66,
@@ -40881,28 +40846,8 @@
     ],
     [
      3.17,
-     6.17,
-     "jaywalking"
-    ],
-    [
-     4.47,
-     26.29,
-     "stopped_vehicle"
-    ],
-    [
-     10.58,
      18.18,
      "jaywalking"
-    ],
-    [
-     15.78,
-     17.48,
-     "near_miss"
-    ],
-    [
-     35.4,
-     317.817,
-     "stopped_vehicle"
     ],
     [
      61.73,
@@ -40915,34 +40860,9 @@
      "jaywalking"
     ],
     [
-     105.57,
-     127.09,
-     "illegal_u_turn"
-    ],
-    [
-     111.18,
-     115.18,
-     "near_miss"
-    ],
-    [
-     123.49,
-     123.99,
-     "near_miss"
-    ],
-    [
-     129.0,
-     141.41,
-     "illegal_u_turn"
-    ],
-    [
      150.52,
      154.72,
      "jaywalking"
-    ],
-    [
-     177.24,
-     178.24,
-     "failure_to_yield"
     ],
     [
      177.24,
@@ -40950,34 +40870,19 @@
      "jaywalking"
     ],
     [
-     177.25,
-     187.25,
-     "road_obstacle"
+     177.44,
+     179.45,
+     "failure_to_yield"
     ],
     [
      182.35,
-     183.15,
+     184.35,
      "failure_to_yield"
     ],
     [
-     196.86,
-     217.48,
-     "illegal_u_turn"
-    ],
-    [
-     214.18,
-     214.98,
+     213.98,
+     216.28,
      "failure_to_yield"
-    ],
-    [
-     233.7,
-     235.0,
-     "near_miss"
-    ],
-    [
-     243.91,
-     245.01,
-     "near_miss"
     ],
     [
      273.84,
@@ -79096,43 +79001,28 @@
   "C3902.MP4": {
    "events": [
     [
-     2.87,
-     40.91,
-     "stopped_vehicle"
-    ],
-    [
      7.27,
      37.1,
      "stop_line"
     ],
     [
-     17.88,
-     18.89,
-     "near_miss"
-    ],
-    [
-     25.89,
-     40.61,
+     24.69,
+     30.6,
      "failure_to_yield"
     ],
     [
-     49.92,
-     53.62,
+     39.01,
+     41.71,
      "failure_to_yield"
     ],
     [
-     52.52,
-     122.99,
-     "stopped_vehicle"
-    ],
-    [
-     80.85,
-     81.85,
-     "near_miss"
+     52.22,
+     55.12,
+     "failure_to_yield"
     ],
     [
      85.35,
-     146.71,
+     186.15,
      "jaywalking"
     ],
     [
@@ -79141,24 +79031,14 @@
      "stop_line"
     ],
     [
-     135.8,
-     162.13,
-     "stopped_vehicle"
+     186.25,
+     187.45,
+     "failure_to_yield"
     ],
     [
-     150.62,
-     186.15,
-     "jaywalking"
-    ],
-    [
-     151.02,
-     152.12,
-     "near_miss"
-    ],
-    [
-     208.07,
-     242.81,
-     "stopped_vehicle"
+     211.08,
+     216.58,
+     "failure_to_yield"
     ],
     [
      253.72,
@@ -79171,44 +79051,9 @@
      "jaywalking"
     ],
     [
-     258.73,
-     278.44,
-     "stopped_vehicle"
-    ],
-    [
-     279.05,
-     279.95,
-     "near_miss"
-    ],
-    [
-     283.15,
-     286.25,
+     284.35,
+     290.16,
      "failure_to_yield"
-    ],
-    [
-     286.55,
-     287.55,
-     "near_miss"
-    ],
-    [
-     287.45,
-     288.66,
-     "failure_to_yield"
-    ],
-    [
-     288.55,
-     307.77,
-     "illegal_u_turn"
-    ],
-    [
-     292.56,
-     306.07,
-     "failure_to_yield"
-    ],
-    [
-     296.16,
-     311.08,
-     "stopped_vehicle"
     ]
    ],
    "risk": [
@@ -117317,19 +117162,9 @@
   "C3905.MP4": {
    "events": [
     [
-     5.07,
-     28.8,
-     "stopped_vehicle"
-    ],
-    [
-     9.58,
-     31.8,
+     14.28,
+     15.38,
      "failure_to_yield"
-    ],
-    [
-     18.08,
-     18.99,
-     "near_miss"
     ],
     [
      32.6,
@@ -117337,24 +117172,39 @@
      "jaywalking"
     ],
     [
-     36.5,
-     45.81,
+     38.3,
+     41.51,
      "failure_to_yield"
     ],
     [
-     56.32,
-     116.78,
-     "stopped_vehicle"
+     41.71,
+     47.31,
+     "failure_to_yield"
     ],
     [
-     62.13,
-     87.75,
-     "illegal_u_turn"
+     54.32,
+     55.82,
+     "failure_to_yield"
+    ],
+    [
+     57.32,
+     58.02,
+     "failure_to_yield"
     ],
     [
      76.94,
      114.48,
      "stop_line"
+    ],
+    [
+     104.67,
+     106.97,
+     "failure_to_yield"
+    ],
+    [
+     124.59,
+     126.19,
+     "failure_to_yield"
     ]
    ],
    "risk": [
@@ -132666,33 +132516,33 @@
    "duration": 340.34,
    "budget_sec": 1021.0,
    "errors": [],
-   "part_a_sec": 88.7,
-   "part_b_sec": 103.8,
-   "total_sec": 192.4
+   "part_a_sec": 89.3,
+   "part_b_sec": 104.0,
+   "total_sec": 193.3
   },
   "C3897.MP4": {
    "duration": 317.82,
    "budget_sec": 953.5,
    "errors": [],
-   "part_a_sec": 82.3,
-   "part_b_sec": 96.9,
-   "total_sec": 179.2
+   "part_a_sec": 83.0,
+   "part_b_sec": 96.6,
+   "total_sec": 179.5
   },
   "C3902.MP4": {
    "duration": 317.82,
    "budget_sec": 953.5,
    "errors": [],
-   "part_a_sec": 86.2,
-   "part_b_sec": 97.9,
-   "total_sec": 184.1
+   "part_a_sec": 86.4,
+   "part_b_sec": 98.0,
+   "total_sec": 184.4
   },
   "C3905.MP4": {
    "duration": 127.63,
    "budget_sec": 382.9,
    "errors": [],
-   "part_a_sec": 31.2,
-   "part_b_sec": 35.8,
-   "total_sec": 66.9
+   "part_a_sec": 31.3,
+   "part_b_sec": 36.0,
+   "total_sec": 67.3
   }
  }
 }
