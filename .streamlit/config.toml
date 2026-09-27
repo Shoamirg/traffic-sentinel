@@ -1,0 +1,10 @@
+# Streamlit live demo (demo/streamlit_app.py): upload limit and the website's colours.
+[server]
+maxUploadSize = 500
+
+[theme]
+base = "dark"
+primaryColor = "#f2c14e"
+backgroundColor = "#131210"
+secondaryBackgroundColor = "#1d1c19"
+textColor = "#ede8dd"

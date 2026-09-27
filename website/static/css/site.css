@@ -150,7 +150,7 @@ ul, ol { margin: 0; padding-left: 1.2em; }
 .btn:hover { background: var(--surface-3); border-color: var(--muted); color: var(--paint); }
 .btn:active { transform: translateY(1px); }
 .btn-primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
-.btn-primary:hover { background: #7fe6f2; border-color: #7fe6f2; color: var(--accent-ink); }
+.btn-primary:hover { background: #f6d27a; border-color: #f6d27a; color: var(--accent-ink); }
 .btn-small { padding: 7px 12px; font-size: 0.85rem; }
 
 /* ------------------------------------------------------------------ sections */

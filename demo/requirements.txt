@@ -1,0 +1,14 @@
+# Live demo on Streamlit Community Cloud (CPU). The submission itself uses ../requirements.txt.
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.5.1+cpu
+torchvision==0.20.1+cpu
+ultralytics==8.4.160
+numpy>=1.24
+opencv-python-headless==5.0.0.93
+av==18.1.0 ; python_version >= "3.11"
+av==17.0.0 ; python_version < "3.11"
+scipy>=1.10
+imageio-ffmpeg>=0.5
+streamlit>=1.38
+pandas>=2.0
+altair>=5.0
