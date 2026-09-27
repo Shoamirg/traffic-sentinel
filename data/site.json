@@ -4,7 +4,7 @@
   "tagline": "A fixed CCTV camera that reports what happened on the road, and warns before it does.",
   "event": "WIUT Hackathon 2026 - Computer Vision track",
   "demo_api": "",
-  "demo_page": "https://traffic-sentinel.streamlit.app",
+  "demo_page": "https://traffic-sentinel-wiut.streamlit.app",
   "members": [
     {
       "name": "Shokiriy Zohirjon Moxirjon o'g'li",
