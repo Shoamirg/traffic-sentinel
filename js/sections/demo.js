@@ -43,13 +43,19 @@ function probeDuration(file) {
 function offlineCard(site) {
   const where = site.demo_page || site.demo_api;
   const href = where && safeUrl(where) !== '#' ? where : null;
+  if (href) {
+    return h('div.card.demo-hosted', { role: 'status' },
+      h('h3', {}, 'Run the model on your own clip'),
+      h('p', {}, 'The live demo runs the same pipeline as our submission on a CPU host: upload an .mp4 / .mov / .avi (up to 500 MB, first 30 s analysed) and get the events, a timeline, the risk curve and an annotated video back, with progress shown while it runs.'),
+      h('p', {}, h('a.btn.btn-primary', { href, target: '_blank', rel: 'noopener noreferrer' }, 'Open the live demo ↗')),
+      h('p.muted.small', {}, 'This page is served as static files; the analysis runs on the demo host.'));
+  }
   return h('div.card.offline', { role: 'status' },
     h('div.offline-lamp', { 'aria-hidden': 'true' }),
     h('div', {},
       h('h3', {}, 'Demo backend is offline here'),
       h('p', {}, 'This copy of the site is served as static files, so there is no analysis server behind it.'),
-      href ? h('p', {}, 'The live demo runs at ', h('a', { href, target: '_blank', rel: 'noopener noreferrer' }, where), '.')
-        : h('p.muted', {}, 'Run it locally: see website/README.md (one uvicorn command).'),
+      h('p.muted', {}, 'Run it locally: see website/README.md (one uvicorn command).'),
       h('p.muted.small', {}, 'Everything else on this page - results, timelines, risk curves - works without it.')));
 }
 

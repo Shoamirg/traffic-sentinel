@@ -4,7 +4,7 @@
   "tagline": "A fixed CCTV camera that reports what happened on the road, and warns before it does.",
   "event": "WIUT Hackathon 2026 - Computer Vision track",
   "demo_api": "",
-  "demo_page": "TODO: https://huggingface.co/spaces/<user>/traffic-sentinel",
+  "demo_page": "https://traffic-sentinel.streamlit.app",
   "members": [
     {
       "name": "Shokiriy Zohirjon Moxirjon o'g'li",
@@ -16,7 +16,7 @@
         "Website frontend: sections, interactive event timelines, risk curves, annotated video player",
         "Report page and presentation of the results"
       ],
-      "github": "",
+      "github": "https://github.com/ZohirjonShokiriy",
       "linkedin": "",
       "portfolio": "",
       "projects": []
@@ -55,7 +55,8 @@
   "links": {
     "repo": "https://github.com/Shoamirg/traffic-sentinel",
     "weights": "https://github.com/Shoamirg/traffic-sentinel/tree/main/weights",
-    "predictions": "https://github.com/Shoamirg/traffic-sentinel/blob/main/predictions_samples.json"
+    "predictions": "https://github.com/Shoamirg/traffic-sentinel/blob/main/predictions_samples.json",
+    "website": "https://shoamirg.github.io/traffic-sentinel/"
   },
   "project_name": "Traffic Sentinel"
 }
